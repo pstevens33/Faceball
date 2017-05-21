@@ -14,7 +14,7 @@ datagen = ImageDataGenerator(
         horizontal_flip=True,
         fill_mode='nearest')
 
-df = pd.read_json('../data/pitcher_stats_and_pics.json', lines=True)
+df = pd.read_pickle('../data/recognized_faces_df')
 image_paths = df['image_path'].values
 eras = df['era'].values
 # np.save('y', eras)
@@ -23,27 +23,27 @@ eras = df['era'].values
 # Resize images to 85x128 and create numpy array of images as numpy arrays
 # Only have to do this for loop once
 
-# img1 = load_img('../data/test_pics/' + image_paths[0])
-# x = img_to_array(img1)  # this is a Numpy array with shape (3, 150, 150)
-# x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
-# X = np.array(x)
-#
-# i = 0
+img1 = load_img('../data/projected_faces/' + image_paths[0])
+x = img_to_array(img1)  # this is a Numpy array with shape (3, 150, 150)
+x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
+X = np.array(x)
 
-# for image_path in image_paths[1:]:
-#
-#     with open('../data/' + image_path, 'r+b') as f:
-#         with Image.open(f) as image:
-#             cover = resizeimage.resize_cover(image, [85, 128])
-#             cover.save('../data/test_pics/' + image_path, image.format)
-#             print(i)
-#             i += 1
-#
-#     img = load_img('../data/test_pics/' + image_path)  # this is a PIL image
-#     x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
-#     x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
-#     X = np.concatenate((X,x))
-#     print(X.shape)
+i = 0
+
+for image_path in image_paths[1:]:
+
+    # with open('../data/' + image_path, 'r+b') as f:
+    #     with Image.open(f) as image:
+    #         cover = resizeimage.resize_cover(image, [85, 128])
+    #         cover.save('../data/projected_faces/' + image_path, image.format)
+    #         print(i)
+    #         i += 1
+
+    img = load_img('../data/projected_faces/' + image_path)  # this is a PIL image
+    x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
+    x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
+    X = np.concatenate((X,x))
+    print(X.shape)
 
 
 # i = 0
