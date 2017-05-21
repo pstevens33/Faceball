@@ -20,6 +20,7 @@ eras = df['era'].values
 # np.save('y', eras)
 
 
+
 # Resize images to 85x128 and create numpy array of images as numpy arrays
 # Only have to do this for loop once
 

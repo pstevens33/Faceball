@@ -9,7 +9,7 @@ from keras.optimizers import RMSprop, Adam, Adadelta
 
 # Grab data from pickles and split into train and test
 X = np.load('../data/X.npy')
-y = np.load('../data/y.npy')
+y = np.load('../data/y_wars.npy')
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 input_shape = (128, 128, 3)
@@ -125,7 +125,7 @@ predict = model.predict(X_test, batch_size=batch_size)
 model_score = round(np.sqrt(np.mean(np.square(predict - y_test))), 2)
 
 
-model.save_weights('weights/{}.h5'.format(model_score))  # always save your weights after training or during training
+#model.save_weights('weights/{}.h5'.format(model_score))  # always save your weights after training or during training
 
 correct_guesses = 0
 print(predict.min())
