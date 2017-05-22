@@ -95,7 +95,7 @@ class_weight = {0 : len(y_train) / (class_count_dict[0]),
                 5 : len(y_train) / class_count_dict[5],
                 6 : len(y_train) / (class_count_dict[6])}
 
-model.fit(X_train, y_train_ohe, epochs=10, batch_size=16, verbose=1, validation_split=0.1) # cross val to estimate test error
+model.fit(X_train, y_train_ohe, epochs=10, batch_size=16, verbose=1) # cross val to estimate test error
 
 predict = []
 predict2 = model.predict(X_test, batch_size=16)
@@ -121,6 +121,14 @@ model_mean = predict.mean()
 correct_lower = 0
 correct_higher = 0
 correct_guesses = 0
+guess0 = []
+guess1 = []
+guess2 = []
+guess3 = []
+guess4 = []
+guess5 = []
+guess6 = []
+
 for i, image in enumerate(X_test):
     image = image.reshape((1,) + image.shape)
     predict3 = model.predict(image)
@@ -140,6 +148,22 @@ for i, image in enumerate(X_test):
         correct_higher += 1
     else:
         print("Incorrect... Prediction: {}, Actual Y Value: {}".format(predict_image, y_test[i]))
+
+    if y_test[i] == 0:
+        guess0.append(predict_image)
+    elif y_test[i] == 1:
+        guess1.append(predict_image)
+    elif y_test[i] == 2:
+        guess2.append(predict_image)
+    elif y_test[i] == 3:
+        guess3.append(predict_image)
+    elif y_test[i] == 4:
+        guess4.append(predict_image)
+    elif y_test[i] == 5:
+        guess5.append(predict_image)
+    elif y_test[i] == 6:
+        guess6.append(predict_image)
+
 print()
 print(predict.mean())
 print()
@@ -148,3 +172,11 @@ correct_guesses = correct_lower + correct_higher
 print("Correct Lower: {}".format(correct_lower))
 print("Correct Higher: {}".format(correct_higher))
 print("Accuracy: {}/{}".format(correct_guesses, len(y_test)))
+print()
+print("0: Average Guess: {}".format(sum(guess0)/len(guess0)))
+print("1: Average Guess: {}".format(sum(guess1)/len(guess1)))
+print("2: Average Guess: {}".format(sum(guess2)/len(guess2)))
+print("3: Average Guess: {}".format(sum(guess3)/len(guess3)))
+print("4: Average Guess: {}".format(sum(guess4)/len(guess4)))
+print("5: Average Guess: {}".format(sum(guess5)/len(guess5)))
+#print("6: Average Guess: {}".format(sum(guess6)/len(guess6)))
