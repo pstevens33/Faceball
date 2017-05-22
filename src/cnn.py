@@ -5,17 +5,20 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
-from keras.optimizers import RMSprop, Adam, Adadelta
+from keras.optimizers import RMSprop, Adam, Adadelta, SGD
 
 # Grab data from pickles and split into train and test
 X = np.load('../data/X.npy')
 y = np.load('../data/y_wars.npy')
 
+X = X[:30]
+y = y[:30]
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 input_shape = (128, 128, 3)
 
 model = Sequential()
-model.add(Conv2D(32, (3, 3), input_shape=input_shape, activation='sigmoid'))
+model.add(Conv2D(32, (3, 3), input_shape=input_shape, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Conv2D(32, (3, 3), activation='relu'))
@@ -25,14 +28,16 @@ model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())
-model.add(Dense(64, activation='linear'))
+model.add(Dense(64, init='uniform', activation='relu'))
 model.add(Dropout(0.2))
-model.add(Dense(64, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(1, activation='relu'))
+model.add(Dense(64, init='uniform', activation='relu'))
+#model.add(Dropout(0.2))
+model.add(Dense(input_dim=None, output_dim=7, init='uniform', activation='relu'))
 
-model.compile(optimizer='rmsprop',
-              loss='mse')
+sgd = SGD(lr=0.001, decay=1e-7, momentum=0.95) # using stochastic gradient descent (keep)
+model.compile(loss='mse', optimizer=sgd) # (keep)
+
+# model.compile(optimizer='rmsprop', loss='mse')
 
 #
 # nb_filters = 8
@@ -109,17 +114,17 @@ validation_generator = test_datagen.flow(
         batch_size=batch_size)
 
 
-model.fit_generator(
-        train_generator,
-        steps_per_epoch=2000 // batch_size,
-        epochs=10,
-        validation_data=validation_generator,
-        validation_steps=800 // batch_size)
-
 # model.fit_generator(
 #         train_generator,
 #         steps_per_epoch=2000 // batch_size,
-#         epochs=5)
+#         epochs=3,
+#         validation_data=validation_generator,
+#         validation_steps=800 // batch_size)
+
+model.fit_generator(
+        train_generator,
+        steps_per_epoch=2000 // batch_size,
+        epochs=3)
 
 predict = model.predict(X_test, batch_size=batch_size)
 model_score = round(np.sqrt(np.mean(np.square(predict - y_test))), 2)

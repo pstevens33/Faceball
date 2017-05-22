@@ -6,6 +6,7 @@ df_war.loc[df_war['years_of_service'] == 0, 'years_of_service'] = 1
 df_war['avg_war'] = round(df_war['war'] / df_war['years_of_service'], 0)
 df_war.loc[df_war['avg_war'] < 0, 'avg_war'] = 0
 df = pd.read_pickle('../data/recognized_faces_df')
+#df_war = df_war[df_war['avg_war'] > 0.5]
 original_names = df['name'].values
 new_names = df_war['name'].values
 avg_wars = df_war['avg_war'].values
@@ -19,5 +20,5 @@ for i, name in enumerate(original_names):
             wars.append(avg_wars[j])
             break
 
-wars = np.array(avg_wars)
-np.save('../data/y_wars', wars)
+wars = np.array(wars)
+np.save('../data/high_y_wars', wars)
