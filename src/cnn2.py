@@ -95,7 +95,7 @@ class_weight = {0 : len(y_train) / (class_count_dict[0]),
                 5 : len(y_train) / class_count_dict[5],
                 6 : len(y_train) / (class_count_dict[6])}
 
-model.fit(X_train, y_train_ohe, epochs=3, batch_size=16, verbose=1, validation_split=0.1) # cross val to estimate test error
+model.fit(X_train, y_train_ohe, epochs=10, batch_size=16, verbose=1, validation_split=0.1) # cross val to estimate test error
 
 predict = []
 predict2 = model.predict(X_test, batch_size=16)
@@ -111,28 +111,40 @@ for i, temp in enumerate(predict2):
 predict = np.array(predict)
 model_score = round(np.sqrt(np.mean(np.square(predict - y_test))), 2)
 
-correct_guesses = 0
+
 print(predict.min())
 print(predict.mean())
 print(predict.max())
 print()
 model_mean = predict.mean()
 
-
+correct_lower = 0
+correct_higher = 0
+correct_guesses = 0
 for i, image in enumerate(X_test):
     image = image.reshape((1,) + image.shape)
     predict3 = model.predict(image)
-    for i, temp in enumerate(predict3):
-        x0 = predict3[i,0] * 1 * -0.3
-        x1 = predict3[i,1] * 1 * 0.3
-        x2 = predict3[i,2] * 2 * 1
-        x3 = predict3[i,3] * 3 * 1
-        x4 = predict3[i,4] * 4 * 12
-        x5 = predict3[i,5] * 5 * 16
-        x6 = predict3[i,6] * 6 * 20
+    x0 = predict3[0][0] * 1 * -0.3
+    x1 = predict3[0][1] * 1 * 0.3
+    x2 = predict3[0][2] * 2 * 1
+    x3 = predict3[0][3] * 3 * 1
+    x4 = predict3[0][4] * 4 * 12
+    x5 = predict3[0][5] * 5 * 16
+    x6 = predict3[0][6] * 6 * 20
     predict_image = round(sum([x0,x1,x2,x3,x4,x5,x6]))
     if predict_image <= model_mean and y_test[i] < y_test.mean():
-        correct_guesses += 1
+        print("Lower...     Prediction: {}, Actual Y Value: {}".format(predict_image, y_test[i]))
+        correct_lower += 1
     elif predict_image >= model_mean and y_test[i] > y_test.mean():
-        correct_guesses += 1
+        print("Higher...    Prediction: {}, Actual Y Value: {}".format(predict_image, y_test[i]))
+        correct_higher += 1
+    else:
+        print("Incorrect... Prediction: {}, Actual Y Value: {}".format(predict_image, y_test[i]))
+print()
+print(predict.mean())
+print()
+
+correct_guesses = correct_lower + correct_higher
+print("Correct Lower: {}".format(correct_lower))
+print("Correct Higher: {}".format(correct_higher))
 print("Accuracy: {}/{}".format(correct_guesses, len(y_test)))
