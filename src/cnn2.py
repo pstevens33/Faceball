@@ -95,7 +95,7 @@ class_weight = {0 : len(y_train) / (class_count_dict[0]),
                 5 : len(y_train) / class_count_dict[5],
                 6 : len(y_train) / (class_count_dict[6])}
 
-model.fit(X_train, y_train_ohe, epochs=10, batch_size=16, verbose=1) # cross val to estimate test error
+model.fit(X_train, y_train_ohe, epochs=5, batch_size=16, verbose=1) # cross val to estimate test error
 
 predict = []
 predict2 = model.predict(X_test, batch_size=16)
@@ -103,7 +103,7 @@ for i, temp in enumerate(predict2):
     x0 = predict2[i,0] * 1 * -0.3
     x1 = predict2[i,1] * 1 * 0.3
     x2 = predict2[i,2] * 2 * 1
-    x3 = predict2[i,3] * 3 * 1
+    x3 = predict2[i,3] * 3 * 4
     x4 = predict2[i,4] * 4 * 12
     x5 = predict2[i,5] * 5 * 16
     x6 = predict2[i,6] * 6 * 20
@@ -135,7 +135,7 @@ for i, image in enumerate(X_test):
     x0 = predict3[0][0] * 1 * -0.3
     x1 = predict3[0][1] * 1 * 0.3
     x2 = predict3[0][2] * 2 * 1
-    x3 = predict3[0][3] * 3 * 1
+    x3 = predict3[0][3] * 3 * 4
     x4 = predict3[0][4] * 4 * 12
     x5 = predict3[0][5] * 5 * 16
     x6 = predict3[0][6] * 6 * 20
