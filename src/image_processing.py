@@ -31,20 +31,22 @@ X = np.array(x)
 
 i = 0
 
-for image_path in image_paths[1:]:
 
-    # with open('../data/' + image_path, 'r+b') as f:
-    #     with Image.open(f) as image:
-    #         cover = resizeimage.resize_cover(image, [85, 128])
-    #         cover.save('../data/projected_faces/' + image_path, image.format)
-    #         print(i)
-    #         i += 1
+### By initializing the numpy array with a specific size and adding data by indexing into it, you save a ton of time but the file is twice as big as concatenation
+### Append to an ordinary python list, it is way faster than concatenation and is the same size
+
+temp = np.load('../data/X.npy')
+temp.shape
+new_x = []
+
+for i,image_path in enumerate(image_paths):
 
     img = load_img('../data/projected_faces/' + image_path)  # this is a PIL image
-    x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
-    x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
-    X = np.concatenate((X,x))
-    print(X.shape)
+    temp_x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
+    temp_x.tolist()
+    # x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
+    new_x.append(temp_x)
+    print(i)
 
 
 # i = 0
