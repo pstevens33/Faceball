@@ -100,7 +100,7 @@ model.fit(X_train, y_train_ohe, epochs=5, batch_size=16, verbose=1) # cross val 
 predict = []
 predict2 = model.predict(X_test, batch_size=16)
 for i, temp in enumerate(predict2):
-    x0 = predict2[i,0] * 1 * -0.3
+    x0 = predict2[i,0] * 1 * -0.5
     x1 = predict2[i,1] * 1 * 0.3
     x2 = predict2[i,2] * 2 * 1
     x3 = predict2[i,3] * 3 * 4
@@ -112,10 +112,7 @@ predict = np.array(predict)
 model_score = round(np.sqrt(np.mean(np.square(predict - y_test))), 2)
 
 
-print(predict.min())
-print(predict.mean())
-print(predict.max())
-print()
+
 model_mean = predict.mean()
 
 correct_lower = 0
@@ -132,7 +129,7 @@ guess6 = []
 for i, image in enumerate(X_test):
     image = image.reshape((1,) + image.shape)
     predict3 = model.predict(image)
-    x0 = predict3[0][0] * 1 * -0.3
+    x0 = predict3[0][0] * 1 * -0.5
     x1 = predict3[0][1] * 1 * 0.3
     x2 = predict3[0][2] * 2 * 1
     x3 = predict3[0][3] * 3 * 4
@@ -165,7 +162,9 @@ for i, image in enumerate(X_test):
         guess6.append(predict_image)
 
 print()
+print(predict.min())
 print(predict.mean())
+print(predict.max())
 print()
 
 correct_guesses = correct_lower + correct_higher
