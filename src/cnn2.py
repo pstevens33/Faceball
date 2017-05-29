@@ -18,8 +18,8 @@ import theano
 from sklearn.cross_validation import train_test_split
 
 
-X = np.load('../data/X.npy')
-y = np.load('../data/y_wars.npy')
+X = np.load('../data/X_batters.npy')
+y = np.load('../data/y_batters.npy')
 
 # X = X[:500]
 # y = y[:500]
@@ -73,16 +73,19 @@ sgd = SGD(lr=0.001, decay=1e-7, momentum=0.95) # using stochastic gradient desce
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=["accuracy"] ) # (keep)
 
 
-train_datagen = ImageDataGenerator(
-        rescale=1./255,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True)
+# batch_size = 16
 
-train_generator = train_datagen.flow(
-        X_train,
-        y_train,
-        batch_size=batch_size)
+
+# train_datagen = ImageDataGenerator(
+#         rescale=1./255,
+#         shear_range=0.2,
+#         zoom_range=0.2,
+#         horizontal_flip=True)
+#
+# train_generator = train_datagen.flow(
+#         X_train,
+#         y_train,
+#         batch_size=batch_size)
 
 
 # for i in np.arange(5,16,1):
@@ -94,30 +97,32 @@ train_generator = train_datagen.flow(
 #         max_acc = print_output(model, y_train, y_test, rng_seed)
 #         max_batch = i
 
-unique, counts = np.unique(y_train, return_counts=True)
-class_count_dict = dict(zip(unique, counts))
+# unique, counts = np.unique(y_train, return_counts=True)
+# class_count_dict = dict(zip(unique, counts))
+#
+# class_weight = {0 : len(y_train) / (class_count_dict[0]),
+#                 1 : len(y_train) / (class_count_dict[1]),
+#                 2 : len(y_train) / (class_count_dict[2]),
+#                 3 : len(y_train) / class_count_dict[3],
+#                 4 : len(y_train) / class_count_dict[4],
+#                 5 : len(y_train) / class_count_dict[5],
+#                 6 : len(y_train) / (class_count_dict[6])}
 
-class_weight = {0 : len(y_train) / (class_count_dict[0]),
-                1 : len(y_train) / (class_count_dict[1]),
-                2 : len(y_train) / (class_count_dict[2]),
-                3 : len(y_train) / class_count_dict[3],
-                4 : len(y_train) / class_count_dict[4],
-                5 : len(y_train) / class_count_dict[5],
-                6 : len(y_train) / (class_count_dict[6])}
-
-model.fit_generator(X_train, y_train_ohe, epochs=5, batch_size=16, verbose=1) # cross val to estimate test error
+model.fit(X_train, y_train_ohe, epochs=10, batch_size=16, verbose=1) # cross val to estimate test error
 
 predict = []
 predict2 = model.predict(X_test, batch_size=16)
 for i, temp in enumerate(predict2):
-    x0 = predict2[i,0] * 1 * -0.5
-    x1 = predict2[i,1] * 1 * 0.3
+    x0 = predict2[i,0] * 1 * -7.5
+    x1 = predict2[i,1] * 1 * 0.5
     x2 = predict2[i,2] * 2 * 1
-    x3 = predict2[i,3] * 3 * 4
-    x4 = predict2[i,4] * 4 * 12
-    x5 = predict2[i,5] * 5 * 16
-    x6 = predict2[i,6] * 6 * 20
-    predict.append(round(sum([x0,x1,x2,x3,x4,x5,x6]),0))
+    x3 = predict2[i,3] * 3 * 10
+    x4 = predict2[i,4] * 4 * 10
+    x5 = predict2[i,5] * 5 * 15
+    x6 = predict2[i,6] * 6 * 15
+    x7 = predict2[i,7] * 7 * 15
+    # x8 = predict2[i,8] * 8 * 1
+    predict.append(round(sum([x0,x1,x2,x3,x4,x5,x6,x7]),0))
 predict = np.array(predict)
 model_score = round(np.sqrt(np.mean(np.square(predict - y_test))), 2)
 
@@ -135,18 +140,22 @@ guess3 = []
 guess4 = []
 guess5 = []
 guess6 = []
+guess7 = []
+guess8 = []
 
 for i, image in enumerate(X_test):
     image = image.reshape((1,) + image.shape)
     predict3 = model.predict(image)
-    x0 = predict3[0][0] * 1 * -0.5
-    x1 = predict3[0][1] * 1 * 0.3
+    x0 = predict3[0][0] * 1 * -7.5
+    x1 = predict3[0][1] * 1 * 0.5
     x2 = predict3[0][2] * 2 * 1
-    x3 = predict3[0][3] * 3 * 4
-    x4 = predict3[0][4] * 4 * 12
-    x5 = predict3[0][5] * 5 * 16
-    x6 = predict3[0][6] * 6 * 20
-    predict_image = round(sum([x0,x1,x2,x3,x4,x5,x6]))
+    x3 = predict3[0][3] * 3 * 10
+    x4 = predict3[0][4] * 4 * 10
+    x5 = predict3[0][5] * 5 * 15
+    x6 = predict3[0][6] * 6 * 15
+    x7 = predict3[0][7] * 7 * 15
+    # x8 = predict3[0][8] * 8 * 1
+    predict_image = round(sum([x0,x1,x2,x3,x4,x5,x6,x7]))
     if predict_image <= model_mean and y_test[i] < y_test.mean():
         print("Lower...     Prediction: {}, Actual Y Value: {}".format(predict_image, y_test[i]))
         correct_lower += 1
@@ -170,6 +179,10 @@ for i, image in enumerate(X_test):
         guess5.append(predict_image)
     elif y_test[i] == 6:
         guess6.append(predict_image)
+    elif y_test[i] == 7:
+        guess7.append(predict_image)
+    elif y_test[i] == 8:
+        guess8.append(predict_image)
 
 print()
 print(predict.min())
@@ -187,5 +200,4 @@ print("1: Average Guess: {}".format(sum(guess1)/len(guess1)))
 print("2: Average Guess: {}".format(sum(guess2)/len(guess2)))
 print("3: Average Guess: {}".format(sum(guess3)/len(guess3)))
 print("4: Average Guess: {}".format(sum(guess4)/len(guess4)))
-print("5: Average Guess: {}".format(sum(guess5)/len(guess5)))
-#print("6: Average Guess: {}".format(sum(guess6)/len(guess6)))
+print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))

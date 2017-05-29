@@ -15,15 +15,17 @@ face_detector = dlib.get_frontal_face_detector()
 face_pose_predictor = dlib.shape_predictor(predictor_model)
 face_aligner = openface.AlignDlib(predictor_model)
 
-df = pd.read_json('../data/pitcher_stats_and_pics.json', lines=True)
+df = pd.read_json('../data/batter_pics.json', lines=True)
 image_paths = df['image_path'].values
-eras = df['era'].values
+wars = df['war'].values
 names = df['name'].values
+years_of_service = df['years_of_service'].values
 image_paths_to_pickle = []
-eras_to_pickle = []
+wars_to_pickle = []
 names_to_pickle = []
+years_to_pickle = []
 
-# Take the image file name from the command line
+
 for count, image_path in enumerate(image_paths):
 
     file_name = '../data/' + image_path
@@ -39,8 +41,9 @@ for count, image_path in enumerate(image_paths):
 
     if len(detected_faces) != 0:
         image_paths_to_pickle.append(image_paths[count])
-        eras_to_pickle.append(eras[count])
+        wars_to_pickle.append(wars[count])
         names_to_pickle.append(names[count])
+        years_to_pickle.append(years_of_service[count])
 
     # Loop through each face we found in the image
     for i, face_rect in enumerate(detected_faces):
@@ -58,8 +61,10 @@ for count, image_path in enumerate(image_paths):
     	# Save the aligned image to a file
     	cv2.imwrite("../data/projected_faces/{}".format(file_name[8:]), alignedFace)
 
+
 df2 = pd.DataFrame()
-df2['image_path'] = pd.Series(image_paths_to_pickle)
-df2['era'] = pd.Series(eras_to_pickle)
 df2['name'] = pd.Series(names_to_pickle)
-df2.to_pickle('../data/recognized_faces_df')
+df2['image_path'] = pd.Series(image_paths_to_pickle)
+df2['war'] = pd.Series(wars_to_pickle)
+df2['years_of_service'] = pd.Series(years_to_pickle)
+df2.to_pickle('../data/recognized_faces_batters_df')
