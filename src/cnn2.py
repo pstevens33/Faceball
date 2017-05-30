@@ -81,7 +81,6 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=["accuracy"]
 
 # batch_size = 16
 
-
 # train_datagen = ImageDataGenerator(
 #         rescale=1./255,
 #         shear_range=0.2,
@@ -103,6 +102,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=["accuracy"]
 #         max_acc = print_output(model, y_train, y_test, rng_seed)
 #         max_batch = i
 
+
 unique, counts = np.unique(y_train, return_counts=True)
 class_count_dict = dict(zip(unique, counts))
 
@@ -115,11 +115,11 @@ class_weight = {0 : len(y_train) / (class_count_dict[0]),
                 6 : len(y_train) / (class_count_dict[6]),
                 7 : len(y_train) / (class_count_dict[7])}
 
-model.fit(X_train, y_train_ohe, epochs=5, class_weight=class_weight, batch_size=16, verbose=1) # cross val to estimate test error
-predict4 = model.predict_classes(X_test, batch_size=16)
+model.fit(X_train, y_train_ohe, epochs=2, batch_size=16, class_weight=class_weight, verbose=1) # cross val to estimate test error
+# predict4 = model.predict_classes(X_test, batch_size=16)
 
 # predict = []
-# predict2 = model.predict(X_test, batch_size=16)
+predict2 = model.predict(X_test, batch_size=16)
 # for i, temp in enumerate(predict2):
 #     x0 = predict2[i,0] * 1 * -7.5
 #     x1 = predict2[i,1] * 1 * 0.5
@@ -210,4 +210,4 @@ predict4 = model.predict_classes(X_test, batch_size=16)
 # print("4: Average Guess: {}".format(sum(guess4)/len(guess4)))
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
-# model.save('models/parker.h5')
+model.save('../data/models/softmax.h5')

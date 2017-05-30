@@ -42,7 +42,7 @@ def deprocess_image(x):
     return x
 
 # build the VGG16 network with ImageNet weights
-model = load_model('models/parker.h5')
+model = load_model('../data/models/softmax.h5')
 print('Model loaded.')
 
 model.summary()
@@ -69,7 +69,7 @@ for filter_index in range(0, 1):
     # we build a loss function that maximizes the activation
     # of the nth filter of the layer considered
     layer_output = layer_dict[layer_name].output
-    loss = K.mean(model.output[:, 1])
+    loss = K.mean(model.output[:, 0])
     # if K.image_data_format() == 'channels_first':
     #     loss = K.mean(layer_output[:, filter_index, :, :])
     # else:
