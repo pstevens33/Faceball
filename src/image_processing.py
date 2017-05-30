@@ -14,29 +14,25 @@ datagen = ImageDataGenerator(
         horizontal_flip=True,
         fill_mode='nearest')
 
-df = pd.read_pickle('../data/recognized_faces_df')
+df = pd.read_pickle('../data/recognized_faces_batters_df')
+df['avg_war'] = round(df['war'] / df['years_of_service'],0)
+for i in range(df.shape[0]):
+    if df.loc[i, 'avg_war'] < 0:
+        df.loc[i, 'avg_war'] = 0
 image_paths = df['image_path'].values
-eras = df['era'].values
-# np.save('y', eras)
+wars = df['war'].values
+avg_wars = df['avg_war'].values
+np.save('../data/y_batters', avg_wars)
 
 
 
 # Resize images to 85x128 and create numpy array of images as numpy arrays
 # Only have to do this for loop once
 
-img1 = load_img('../data/projected_faces/' + image_paths[0])
-x = img_to_array(img1)  # this is a Numpy array with shape (3, 150, 150)
-x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
-X = np.array(x)
-
-i = 0
-
 
 ### By initializing the numpy array with a specific size and adding data by indexing into it, you save a ton of time but the file is twice as big as concatenation
 ### Append to an ordinary python list, it is way faster than concatenation and is the same size
 
-temp = np.load('../data/X.npy')
-temp.shape
 new_x = []
 
 for i,image_path in enumerate(image_paths):
@@ -48,6 +44,9 @@ for i,image_path in enumerate(image_paths):
     new_x.append(temp_x)
     print(i)
 
+X = np.array(new_x)
+
+np.save('../data/X_batters.npy', X)
 
 # i = 0
 # for batch in datagen.flow(x, batch_size=1,
