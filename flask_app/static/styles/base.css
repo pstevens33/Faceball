@@ -1,0 +1,41 @@
+h1 {
+    color: blue;
+    font-size: 30px;
+}
+
+.navbar-brand {
+    margin-left: 0px;
+    font-size: 24px;
+}
+
+.nav-link {
+    font-size: 24px;
+    margin-left: 50px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-image: url(../img/stadium_pic.jpeg);
+    background-size: cover;
+    background-position: 0% 25%;
+    min-height: 520px;
+    color: red;
+    padding-top: 150px;
+}
+
+#jumbotron-button {
+    color: red;
+    background-color: black;
+}
+
+
+////////////////////////////////// How It Works /////////////////////////////////////
+
+
+
+////////////////////////////////// Perfection /////////////////////////////////////
+
+.bottom-img {
+    /*z-index: 1;*/
+    opacity: 0;
+}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>How it works</h1>
+    <h3>Explanation of how ConvNets work</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam volutpat sem metus, eu facilisis mi fermentum elementum. Etiam ultricies mattis interdum. Aenean luctus eros dignissim, pulvinar mauris a, vehicula est. Nam ornare tristique ligula id pharetra. Duis mollis, massa in vestibulum volutpat, felis enim consectetur nisi, a ultrices justo nunc nec magna. Etiam diam leo, eleifend non orci eget, vulputate pellentesque augue. Aliquam eu metus arcu. Sed commodo posuere dictum. Aliquam odio dolor, volutpat eget orci ut, suscipit rutrum neque. Nullam ultrices rutrum sem, porta facilisis felis pellentesque quis. Etiam ante arcu, vulputate a nunc faucibus, lobortis fermentum enim. Mauris vitae ipsum mollis, sagittis enim sed, vehicula risus.</p>
+    <center><img src="{{ url_for('static', filename='img/neural_net_diagram.png') }}"></center>
+    <p>Aliquam id felis quis odio aliquam rhoncus. Curabitur vel augue pellentesque, finibus dui quis, porta velit. Vestibulum eget congue neque. Aenean fringilla ligula dignissim purus pulvinar, in congue nisl tincidunt. Proin eleifend, felis sollicitudin condimentum varius, sapien quam pharetra metus, nec tristique sem urna quis felis. Vestibulum eros nisl, euismod varius nunc ut, ullamcorper scelerisque lectus. Donec ultricies blandit auctor. Curabitur gravida metus nec lacus pellentesque tincidunt. Ut lorem tortor, consequat in felis sed, faucibus interdum mauris. Integer enim est, pharetra id elit ut, auctor consectetur est. Nunc placerat tempor pharetra. Aenean porttitor sollicitudin quam rhoncus lobortis. Vivamus sed lacinia elit. Donec elit metus, tempus tincidunt nulla nec, blandit cursus ante.</p>
+</div>
+{% endblock %}

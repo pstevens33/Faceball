@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+
+    <h1>Submit a picture for prediction</h1>
+    <br>
+    <!-- <img src="{{ url_for('static', filename='img/players/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg') }}"> -->
+
+    {% for path in data[1:208] %}
+
+    <img class="top-img" src="{{ url_for('static', filename=path) }}" height="70px" width="50px">
+    {% endfor %}
+
+    {% for path in data[208:416] %}
+
+    <img class="bottom-img" src="{{ url_for('static', filename=path) }}" height="70px" width="50px" style="opacity:0.15; z-index=-10">
+    {% endfor %}
+
+
+
+
+<script type="text/javascript">
+window.onload = function()
+{
+
+    $( ".top-img" ).each(function( index ) {
+        var pos = $(this).offset();
+        $(this).delay(100*index).fadeTo("slow", 0);
+
+    });
+
+    $( ".bottom-img" ).each(function( index ) {
+
+        $(this).delay(100*index).fadeto("slow", 0.99);
+    });
+
+
+}
+</script>
+
+
+
+
+
+{% endblock %}
