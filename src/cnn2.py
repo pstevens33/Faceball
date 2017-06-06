@@ -247,4 +247,4 @@ predict2 = model.predict(X_test, batch_size=64)
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
 
-# model.save('../data/models/best_model2.h5')
+model.save('../data/models/gpu_300.h5')
