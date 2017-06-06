@@ -43,7 +43,7 @@ def deprocess_image(x):
     return x
 
 # build the VGG16 network with ImageNet weights
-model = load_model('../data/models/best_model.h5')
+model = load_model('../data/models/gpu_test.h5')
 print('Model loaded.')
 
 model.summary()

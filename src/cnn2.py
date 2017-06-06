@@ -125,7 +125,7 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-model.fit(X_train, y_train_ohe, nb_epoch=1, batch_size=128, verbose=1) # cross val to estimate test error
+model.fit(X_train, y_train_ohe, epochs=301, batch_size=128, verbose=1) # cross val to estimate test error
 predict = model.predict_classes(X_test, batch_size=64)
 unique, counts = np.unique(predict, return_counts=True)
 class_count_dict = dict(zip(unique, counts))
@@ -224,4 +224,4 @@ predict2 = model.predict(X_test, batch_size=64)
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
 
-model.save('../data/models/gpu_test.h5')
+model.save('../data/models/gpu_301.h5')
