@@ -43,23 +43,23 @@ num_neurons_in_layer = 64 # number of neurons in a layer
 num_inputs = X_train.shape[1] # number of features (784)
 num_classes = y_train_ohe.shape[1]  # number of classes, 0-9
 
-model.add(Conv2D(32, (3, 3), input_shape=input_shape, activation='relu'))
+model.add(Conv2D(32, 3, 3, input_shape=input_shape, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
 
-model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(Conv2D(32, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
 
-model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(64, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
 
-model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(64, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
 
-model.add(Conv2D(128, (3, 3), activation='relu'))
+model.add(Conv2D(128, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
 
