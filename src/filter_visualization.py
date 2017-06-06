@@ -8,10 +8,11 @@ from scipy.misc import imsave
 import numpy as np
 import time
 from keras.applications import vgg16
-from keras import backend as K
+# from keras import backend as K
 from keras.models import load_model
 import cv2
 from PIL import Image
+from keras.layers.core import K
 
 # dimensions of the generated pictures for each filter.
 img_width = 128
@@ -22,7 +23,7 @@ img_height = 128
 layer_name = 'dense_4'
 
 # util function to convert a tensor into a valid image
-
+K.set_learning_phase(0)
 
 def deprocess_image(x):
     # normalize tensor: center on 0., ensure std is 0.1
@@ -42,7 +43,7 @@ def deprocess_image(x):
     return x
 
 # build the VGG16 network with ImageNet weights
-model = load_model('../data/models/softmax.h5')
+model = load_model('../data/models/gpu_300.h5')
 print('Model loaded.')
 
 model.summary()
