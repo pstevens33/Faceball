@@ -125,7 +125,7 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-model.fit(X_train, y_train_ohe, epochs=300, batch_size=128, verbose=1) # cross val to estimate test error
+model.fit(X_train, y_train_ohe, nb_epoch=300, batch_size=128, verbose=1) # cross val to estimate test error
 predict = model.predict_classes(X_test, batch_size=64)
 unique, counts = np.unique(predict, return_counts=True)
 class_count_dict = dict(zip(unique, counts))
