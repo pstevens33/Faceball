@@ -20,7 +20,7 @@ img_height = 128
 
 # the name of the layer we want to visualize
 # (see model definition at keras/applications/vgg16.py)
-layer_name = 'dense_4'
+layer_name = 'conv2d_5'
 
 # util function to convert a tensor into a valid image
 K.set_learning_phase(0)
@@ -43,7 +43,7 @@ def deprocess_image(x):
     return x
 
 # build the VGG16 network with ImageNet weights
-model = load_model('../data/models/gpu_test.h5')
+model = load_model('../data/models/gpu_301.h5')
 print('Model loaded.')
 
 model.summary()
@@ -61,7 +61,7 @@ def normalize(x):
 
 
 kept_filters = []
-for filter_index in range(0, 1):
+for filter_index in range(100):
     # we only scan through the first 200 filters,
     # but there are actually 512 of them
     print('Processing filter %d' % filter_index)
@@ -70,7 +70,7 @@ for filter_index in range(0, 1):
     # we build a loss function that maximizes the activation
     # of the nth filter of the layer considered
     layer_output = layer_dict[layer_name].output
-    loss = K.mean(model.output[:, 0])
+    loss = K.mean(model.output[:, 1])
     # if K.image_data_format() == 'channels_first':
     #     loss = K.mean(layer_output[:, filter_index, :, :])
     # else:
@@ -117,10 +117,11 @@ for filter_index in range(0, 1):
         input_img_data += grads_value * step
         i+=1
 
-        print('Current loss value:', loss_value)
+        print('Current loss value:{}........{}'.format(round(loss_value,4), i) )
         if loss_value <= 0.:
             # some filters get stuck to 0, we can skip them
             break
+
 
     # decode the resulting input image
     if loss_value > 0:

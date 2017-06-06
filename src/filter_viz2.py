@@ -57,7 +57,7 @@ def normalize(x):
 
 
 kept_filters = []
-for filter_index in range(0, 100):
+for filter_index in range(0, 200):
     # we only scan through the first 200 filters,
     # but there are actually 512 of them
     print('Processing filter %d' % filter_index)
@@ -91,7 +91,7 @@ for filter_index in range(0, 100):
     input_img_data = (input_img_data - 0.5) * 20 + 128
 
     # we run gradient ascent for 20 steps
-    for i in range(20):
+    for i in range(10):
         loss_value, grads_value = iterate([input_img_data])
         input_img_data += grads_value * step
 
@@ -100,12 +100,15 @@ for filter_index in range(0, 100):
             # some filters get stuck to 0, we can skip them
             break
 
+
     # decode the resulting input image
     if loss_value > 0:
         img = deprocess_image(input_img_data[0])
         kept_filters.append((img, loss_value))
     end_time = time.time()
     print('Filter %d processed in %ds' % (filter_index, end_time - start_time))
+
+
 
 # we will stich the best 64 filters on a 8 x 8 grid.
 n = 8
