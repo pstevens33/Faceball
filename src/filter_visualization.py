@@ -7,7 +7,7 @@ from __future__ import print_function
 from scipy.misc import imsave
 import numpy as np
 import time
-from keras.applications import vgg16
+# from keras.applications import vgg16
 # from keras import backend as K
 from keras.models import load_model
 import cv2
@@ -43,7 +43,7 @@ def deprocess_image(x):
     return x
 
 # build the VGG16 network with ImageNet weights
-model = load_model('../data/models/gpu_300.h5')
+model = load_model('../data/models/best_model.h5')
 print('Model loaded.')
 
 model.summary()
