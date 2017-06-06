@@ -14,8 +14,32 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
+import keras.backend as K
 import theano
 from sklearn.cross_validation import train_test_split
+
+
+def f1_score(y_true, y_pred):
+
+    # Count positive samples.
+    c1 = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    c2 = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    c3 = K.sum(K.round(K.clip(y_true, 0, 1)))
+
+    # If there are no true samples, fix the F1 score at 0.
+    if c3 == 0:
+        return 0
+
+    # How many selected items are relevant?
+    precision = c1 / c2
+
+    # How many relevant items are selected?
+    recall = c1 / c3
+
+    # Calculate f1_score
+    f1_score = 2 * (precision * recall) / (precision + recall)
+    return f1_score
+
 
 
 X = np.load('../data/X_batters.npy')
@@ -44,39 +68,47 @@ num_classes = y_train_ohe.shape[1]  # number of classes, 0-9
 
 model.add(Conv2D(32, (3, 3), input_shape=input_shape, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.2))
 
 model.add(Conv2D(32, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.2))
 
 model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.2))
 
 model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.2))
 
 model.add(Conv2D(128, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.2))
 
 model.add(Flatten())
 
 model.add(Dense(input_dim=128,
                  output_dim=num_neurons_in_layer,
                  init='uniform',
-                 activation='relu')) # only 12 neurons in this layer!
+                 activation='relu'))
+# model.add(Dropout(0.5))
 model.add(Dense(input_dim=num_neurons_in_layer,
                  output_dim=num_neurons_in_layer,
                  init='uniform',
-                 activation='relu')) # only 12 neurons - keep softmax at last layer
+                 activation='relu'))
+# model.add(Dropout(0.5))
 model.add(Dense(input_dim=num_neurons_in_layer,
                  output_dim=num_neurons_in_layer,
                  init='uniform',
-                 activation='relu')) # only 12 neurons - keep softmax at last layer
+                 activation='relu'))
+# model.add(Dropout(0.5))
 model.add(Dense(input_dim=num_neurons_in_layer,
                  output_dim=num_classes,
                  init='uniform',
-                 activation='sigmoid')) # only 12 neurons - keep softmax at last layer
+                 activation='relu')) # only 12 neurons - keep softmax at last layer
 sgd = SGD(lr=0.001, decay=1e-7, momentum=0.95) # using stochastic gradient descent (keep)
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=["accuracy"] ) # (keep)
+model.compile(loss='mse', optimizer='adam', metrics=['accuracy'] ) # (keep)
 
 
 # batch_size = 16
@@ -105,20 +137,25 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=["accuracy"]
 unique, counts = np.unique(y_train, return_counts=True)
 class_count_dict = dict(zip(unique, counts))
 
-class_weight = {0 : len(y_train) / (class_count_dict[0]),
-                1 : len(y_train) / (class_count_dict[1]),
-                2 : len(y_train) / (class_count_dict[2]),
-                3 : len(y_train) / class_count_dict[3],
-                4 : len(y_train) / class_count_dict[4],
-                5 : len(y_train) / class_count_dict[5],
-                6 : len(y_train) / (class_count_dict[6]),
-                7 : len(y_train) / (class_count_dict[7])}
+# class_weight = {0 : len(y_train) / (class_count_dict[0]),
+#                 1 : len(y_train) / (class_count_dict[1]),
+#                 2 : len(y_train) / (class_count_dict[2]),
+#                 3 : len(y_train) / class_count_dict[3],
+#                 4 : len(y_train) / class_count_dict[4],
+#                 5 : len(y_train) / class_count_dict[5],
+#                 6 : len(y_train) / (class_count_dict[6]),
+#                 7 : len(y_train) / (class_count_dict[7])}
 
-model.fit(X_train, y_train_ohe, epochs=2, batch_size=64, class_weight=class_weight, verbose=1) # cross val to estimate test error
-predict4 = model.predict_classes(X_test, batch_size=16)
+
+
+model.fit(X_train, y_train_ohe, epochs=100, batch_size=128, verbose=1) # cross val to estimate test error
+predict = model.predict_classes(X_test, batch_size=64)
+unique, counts = np.unique(predict, return_counts=True)
+class_count_dict = dict(zip(unique, counts))
+print(class_count_dict)
 
 # predict = []
-# predict2 = model.predict(X_test, batch_size=16)
+predict2 = model.predict(X_test, batch_size=64)
 # for i, temp in enumerate(predict2):
 #     x0 = predict2[i,0] * 1 * -7.5
 #     x1 = predict2[i,1] * 1 * 0.5
@@ -210,4 +247,4 @@ predict4 = model.predict_classes(X_test, batch_size=16)
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
 
-model.save('../data/models/softmax.h5')
+# model.save('../data/models/best_model2.h5')
