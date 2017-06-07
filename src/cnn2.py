@@ -16,7 +16,7 @@ from keras.preprocessing.image import ImageDataGenerator
 # import theano
 from sklearn.cross_validation import train_test_split
 
-
+os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
 
 X = np.load('../data/X_pitchers.npy')
