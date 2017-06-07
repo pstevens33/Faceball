@@ -15,6 +15,7 @@ from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
 # import theano
 from sklearn.cross_validation import train_test_split
+import os
 
 os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
