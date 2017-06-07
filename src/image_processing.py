@@ -2,19 +2,19 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 from resizeimage import resizeimage
+# from keras.preprocessing.image import ImageDataGenerator
+from keras.preprocessing.image import array_to_img, img_to_array, load_img
 
-from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
+# datagen = ImageDataGenerator(
+#         rotation_range=40,
+#         width_shift_range=0.2,
+#         height_shift_range=0.2,
+#         shear_range=0.2,
+#         zoom_range=0.2,
+#         horizontal_flip=True,
+#         fill_mode='nearest')
 
-datagen = ImageDataGenerator(
-        rotation_range=40,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True,
-        fill_mode='nearest')
-
-df = pd.read_pickle('../data/recognized_faces_batters_df')
+df = pd.read_pickle('../data/recognized_faces_pitchers_df')
 df['avg_war'] = round(df['war'] / df['years_of_service'],0)
 for i in range(df.shape[0]):
     if df.loc[i, 'avg_war'] < 0:
@@ -22,7 +22,7 @@ for i in range(df.shape[0]):
 image_paths = df['image_path'].values
 wars = df['war'].values
 avg_wars = df['avg_war'].values
-np.save('../data/y_batters', avg_wars)
+np.save('../data/y_pitchers', avg_wars)
 
 
 
@@ -46,7 +46,7 @@ for i,image_path in enumerate(image_paths):
 
 X = np.array(new_x)
 
-np.save('../data/X_batters.npy', X)
+np.save('../data/X_pitchers.npy', X)
 
 # i = 0
 # for batch in datagen.flow(x, batch_size=1,

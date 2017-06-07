@@ -15,7 +15,7 @@ face_detector = dlib.get_frontal_face_detector()
 face_pose_predictor = dlib.shape_predictor(predictor_model)
 face_aligner = openface.AlignDlib(predictor_model)
 
-df = pd.read_json('../data/batter_pics.json', lines=True)
+df = pd.read_json('../data/pitcher_pics.json', lines=True)
 image_paths = df['image_path'].values
 wars = df['war'].values
 names = df['name'].values
@@ -27,11 +27,12 @@ years_to_pickle = []
 
 
 for count, image_path in enumerate(image_paths):
-
+    image = None
     file_name = '../data/' + image_path
 
     # Load the image
     image = cv2.imread(file_name)
+    # if image != None:
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Run the HOG face detector on the image data
@@ -62,9 +63,11 @@ for count, image_path in enumerate(image_paths):
     	cv2.imwrite("../data/projected_faces/{}".format(file_name[8:]), alignedFace)
 
 
+
+
 df2 = pd.DataFrame()
 df2['name'] = pd.Series(names_to_pickle)
 df2['image_path'] = pd.Series(image_paths_to_pickle)
 df2['war'] = pd.Series(wars_to_pickle)
 df2['years_of_service'] = pd.Series(years_to_pickle)
-df2.to_pickle('../data/recognized_faces_batters_df')
+df2.to_pickle('../data/recognized_faces_pitchers_df')
