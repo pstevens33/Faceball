@@ -4,14 +4,14 @@ from keras.layers.core import K
 from sklearn.cross_validation import train_test_split
 
 
-X = np.load('../data/X_batters.npy')
-y = np.load('../data/y_batters.npy')
+X = np.load('../data/X_pitchers.npy')
+y = np.load('../data/y_pitchers.npy')
 
 
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
-model = load_model('../data/models/gpu_500.h5')
+model = load_model('../data/models/gpu_500_pitchers.h5')
 print('Model loaded.')
 
 predict = model.predict_classes(X_test)

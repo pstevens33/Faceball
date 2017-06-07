@@ -20,8 +20,8 @@ from sklearn.cross_validation import train_test_split
 # os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
 
-X = np.load('../data/X_pitchers.npy')
-y = np.load('../data/y_pitchers.npy')
+X = np.load('../data/X_players.npy')
+y = np.load('../data/y_players.npy')
 
 # X = X[:500]
 # y = y[:500]
@@ -225,4 +225,4 @@ predict2 = model.predict(X_test, batch_size=64)
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
 
-model.save('../data/models/gpu_500_pitchers.h5')
+model.save('../data/models/gpu_500_players.h5')

@@ -14,15 +14,20 @@ from keras.preprocessing.image import array_to_img, img_to_array, load_img
 #         horizontal_flip=True,
 #         fill_mode='nearest')
 
-df = pd.read_pickle('../data/recognized_faces_pitchers_df')
+df_batters = pd.read_pickle('../data/recognized_faces_batters_df')
+df_pitchers = pd.read_pickle('../data/recognized_faces_pitchers_df')
+df = pd.concat([df_batters, df_pitchers])
+df = df.reset_index()
 df['avg_war'] = round(df['war'] / df['years_of_service'],0)
 for i in range(df.shape[0]):
     if df.loc[i, 'avg_war'] < 0:
         df.loc[i, 'avg_war'] = 0
+    elif df.loc[i, 'avg_war'] > 5:
+        df.loc[i, 'avg_war'] = 5
 image_paths = df['image_path'].values
 wars = df['war'].values
 avg_wars = df['avg_war'].values
-np.save('../data/y_pitchers', avg_wars)
+np.save('../data/y_players', avg_wars)
 
 
 
@@ -46,7 +51,7 @@ for i,image_path in enumerate(image_paths):
 
 X = np.array(new_x)
 
-np.save('../data/X_pitchers.npy', X)
+np.save('../data/X_players.npy', X)
 
 # i = 0
 # for batch in datagen.flow(x, batch_size=1,
