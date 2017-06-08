@@ -115,17 +115,17 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 unique, counts = np.unique(y_train, return_counts=True)
 class_count_dict = dict(zip(unique, counts))
 
-class_weight = {0 : len(y_train) / (class_count_dict[0]),
-                1 : len(y_train) / (class_count_dict[1]),
-                2 : len(y_train) / (class_count_dict[2]),
-                3 : len(y_train) / class_count_dict[3],
-                4 : len(y_train) / class_count_dict[4],
-                5 : len(y_train) / class_count_dict[5]}
+# class_weight = {0 : len(y_train) / (class_count_dict[0]),
+#                 1 : len(y_train) / (class_count_dict[1]),
+#                 2 : len(y_train) / (class_count_dict[2]),
+#                 3 : len(y_train) / class_count_dict[3],
+#                 4 : len(y_train) / class_count_dict[4],
+#                 5 : len(y_train) / class_count_dict[5]}
 
 
 
 
-model.fit(X_train, y_train_ohe, epochs=300, batch_size=128, class_weight=class_weight, verbose=1) # cross val to estimate test error
+model.fit(X_train, y_train_ohe, epochs=300, batch_size=128, verbose=1) # cross val to estimate test error
 predict = model.predict_classes(X_test, batch_size=64)
 unique, counts = np.unique(predict, return_counts=True)
 class_count_dict = dict(zip(unique, counts))
@@ -224,4 +224,4 @@ predict2 = model.predict(X_test, batch_size=64)
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
 
-model.save('../data/models/gpu_300_players_balanced_sigmoid_binary.h5')
+model.save('../data/models/gpu_300_players_sigmoid_binary.h5')
