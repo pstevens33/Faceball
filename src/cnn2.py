@@ -84,9 +84,9 @@ model.add(Dense(input_dim=num_neurons_in_layer,
 model.add(Dense(input_dim=num_neurons_in_layer,
                  output_dim=num_classes,
                  init='uniform',
-                 activation='relu')) # only 12 neurons - keep softmax at last layer
+                 activation='sigmoid')) # only 12 neurons - keep softmax at last layer
 sgd = SGD(lr=0.001, decay=1e-7, momentum=0.95) # using stochastic gradient descent (keep)
-model.compile(loss='mse', optimizer='adam', metrics=['accuracy'] ) # (keep)
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'] ) # (keep)
 
 
 # batch_size = 16
@@ -224,4 +224,4 @@ predict2 = model.predict(X_test, batch_size=64)
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
 
-model.save('../data/models/gpu_300_players_balanced.h5')
+model.save('../data/models/gpu_300_players_balanced_sigmoid_binary.h5')
