@@ -11,7 +11,7 @@ y = np.load('../data/y_players.npy')
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
-model = load_model('../data/models/gpu_500_players.h5')
+model = load_model('../data/models/gpu_300_players_sigmoid_binary.h5')
 print('Model loaded.')
 
 predict = model.predict_classes(X_test)
