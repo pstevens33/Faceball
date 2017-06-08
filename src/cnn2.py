@@ -120,7 +120,7 @@ class_weight = {0 : len(y_train) / (class_count_dict[0]),
                 2 : len(y_train) / (class_count_dict[2]),
                 3 : len(y_train) / class_count_dict[3],
                 4 : len(y_train) / class_count_dict[4],
-                5 : len(y_train) / class_count_dict[5]
+                5 : len(y_train) / class_count_dict[5]}
 
 
 
