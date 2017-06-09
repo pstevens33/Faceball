@@ -89,7 +89,7 @@ model.add(Dense(input_dim=num_neurons_in_layer,
                  init='uniform',
                  activation='sigmoid')) # only 12 neurons - keep softmax at last layer
 sgd = SGD(lr=0.001, decay=1e-7, momentum=0.95) # using stochastic gradient descent (keep)
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'] ) # (keep)
+model.compile(loss='mse', optimizer='adam', metrics=['accuracy'] ) # (keep)
 
 
 # batch_size = 16
@@ -128,7 +128,7 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-history = model.fit(X, y_ohe, epochs=300, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
+history = model.fit(X, y_ohe, epochs=150, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
 # predict = model.predict_classes(X_test, batch_size=64)
 # unique, counts = np.unique(predict, return_counts=True)
 # class_count_dict = dict(zip(unique, counts))
@@ -233,7 +233,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/acc_300.png')
+plt.savefig('../data/plots/acc_150_mse.png')
 plt.close()
 
 plt.plot(history.history['loss'])
@@ -242,7 +242,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/loss_300.png')
+plt.savefig('../data/plots/loss_150_mse.png')
 plt.close()
 
 # model.save('../data/models/gpu_300_players_sigmoid_binary.h5')
