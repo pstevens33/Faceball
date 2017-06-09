@@ -13,12 +13,14 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
+from keras.callbacks import History 
 # import theano
 from sklearn.cross_validation import train_test_split
 # import os
 
 # os.environ["THEANO_FLAGS"] = "device=cuda, assert_no_cpu_op=True"
 
+history = History()
 
 X = np.load('../data/X_players.npy')
 y = np.load('../data/y_players.npy')
@@ -125,7 +127,7 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-model.fit(X, y_ohe, epochs=300, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
+model.fit(X, y_ohe, epochs=10, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
 # predict = model.predict_classes(X_test, batch_size=64)
 # unique, counts = np.unique(predict, return_counts=True)
 # class_count_dict = dict(zip(unique, counts))
