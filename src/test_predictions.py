@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from keras.models import load_model
 from keras.layers.core import K
 from sklearn.cross_validation import train_test_split
@@ -11,7 +12,7 @@ y = np.load('../data/y_players.npy')
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
-model = load_model('../data/models/gpu_1000_players_sigmoid_binary.h5')
+model = load_model('../data/models/gpu_500_players.h5')
 print('Model loaded.')
 
 predict = model.predict_classes(X_test)
@@ -61,3 +62,17 @@ print("2: Average Guess: {}".format(sum(guess2)/len(guess2)))
 print("3: Average Guess: {}".format(sum(guess3)/len(guess3)))
 print("4: Average Guess: {}".format(sum(guess4)/len(guess4)))
 print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
+
+result0 = sum(guess0)/len(guess0)
+result1 = sum(guess1)/len(guess1)
+result2 = sum(guess2)/len(guess2)
+result3 = sum(guess3)/len(guess3)
+result4 = sum(guess4)/len(guess4)
+result5 = sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])
+
+plt.bar(range(6), [result0,result1,result2,result3,result4,result5])
+plt.title('Prediction Trend')
+plt.ylabel('Average Prediction')
+plt.xlabel('Image Classification')
+plt.savefig('../data/plots/relu_mse__prediction_trend.png')
+plt.close()

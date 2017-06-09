@@ -87,7 +87,7 @@ model.add(Dense(input_dim=num_neurons_in_layer,
 model.add(Dense(input_dim=num_neurons_in_layer,
                  output_dim=num_classes,
                  init='uniform',
-                 activation='sigmoid')) # only 12 neurons - keep softmax at last layer
+                 activation='relu')) # only 12 neurons - keep softmax at last layer
 sgd = SGD(lr=0.001, decay=1e-7, momentum=0.95) # using stochastic gradient descent (keep)
 model.compile(loss='mse', optimizer='adam', metrics=['accuracy'] ) # (keep)
 
