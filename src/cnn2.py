@@ -46,23 +46,23 @@ num_classes = y_ohe.shape[1]  # number of classes, 0-9
 
 model.add(Conv2D(32, 3, 3, input_shape=input_shape, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 
 model.add(Conv2D(32, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 
 model.add(Conv2D(64, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 
 model.add(Conv2D(64, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 
 model.add(Conv2D(128, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 
 model.add(Flatten())
 
@@ -125,7 +125,7 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-model.fit(X, y_ohe, epochs=500, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
+model.fit(X, y_ohe, epochs=300, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
 # predict = model.predict_classes(X_test, batch_size=64)
 # unique, counts = np.unique(predict, return_counts=True)
 # class_count_dict = dict(zip(unique, counts))
@@ -224,4 +224,4 @@ model.fit(X, y_ohe, epochs=500, batch_size=128, shuffle=True, verbose=1, validat
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
 
-model.save('../data/models/gpu_500_players_sigmoid_binary.h5')
+# model.save('../data/models/gpu_300_players_sigmoid_binary.h5')
