@@ -128,7 +128,7 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-history = model.fit(X, y_ohe, epochs=10, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
+history = model.fit(X, y_ohe, epochs=300, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
 # predict = model.predict_classes(X_test, batch_size=64)
 # unique, counts = np.unique(predict, return_counts=True)
 # class_count_dict = dict(zip(unique, counts))
