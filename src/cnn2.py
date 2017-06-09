@@ -7,6 +7,7 @@ Note: neural network geometry not optimized (accuracy could be much better!)
 
 from __future__ import division
 import numpy as np
+import matplotlib.pyplot as plt
 from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
@@ -127,7 +128,7 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-model.fit(X, y_ohe, epochs=10, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
+history = model.fit(X, y_ohe, epochs=10, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
 # predict = model.predict_classes(X_test, batch_size=64)
 # unique, counts = np.unique(predict, return_counts=True)
 # class_count_dict = dict(zip(unique, counts))
@@ -225,5 +226,23 @@ model.fit(X, y_ohe, epochs=10, batch_size=128, shuffle=True, verbose=1, validati
 # print("4: Average Guess: {}".format(sum(guess4)/len(guess4)))
 # print("5+: Average Guess: {}".format(sum([sum(guess5),sum(guess6),sum(guess7),sum(guess8)])/sum([len(guess5),len(guess6),len(guess7),len(guess8)])))
 #
+
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('../data/plots/acc_300.png')
+plt.close()
+
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('../data/plots/loss_300.png')
+plt.close()
 
 # model.save('../data/models/gpu_300_players_sigmoid_binary.h5')
