@@ -26,7 +26,7 @@ y = np.load('../data/y_players.npy')
 # X = X[:500]
 # y = y[:500]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=43)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=43)
 y_train_ohe = np_utils.to_categorical(y_train)
 
 input_shape = (128, 128, 3)
@@ -125,7 +125,7 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-model.fit(X_train, y_train_ohe, epochs=500, batch_size=128, verbose=1) # cross val to estimate test error
+model.fit(X_train, y_train_ohe, epochs=500, batch_size=128, verbose=1, validation_split=0.1) # cross val to estimate test error
 predict = model.predict_classes(X_test, batch_size=64)
 unique, counts = np.unique(predict, return_counts=True)
 class_count_dict = dict(zip(unique, counts))
