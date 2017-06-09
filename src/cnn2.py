@@ -26,8 +26,8 @@ y = np.load('../data/y_players.npy')
 # X = X[:500]
 # y = y[:500]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=43)
-y_train_ohe = np_utils.to_categorical(y_train)
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=43)
+y_ohe = np_utils.to_categorical(y)
 
 input_shape = (128, 128, 3)
 
@@ -41,8 +41,8 @@ input_shape = (128, 128, 3)
 
 model = Sequential() # sequence of layers
 num_neurons_in_layer = 64 # number of neurons in a layer
-num_inputs = X_train.shape[1] # number of features (784)
-num_classes = y_train_ohe.shape[1]  # number of classes, 0-9
+num_inputs = X.shape[1] # number of features (784)
+num_classes = y_ohe.shape[1]  # number of classes, 0-9
 
 model.add(Conv2D(32, 3, 3, input_shape=input_shape, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -112,7 +112,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 #         max_acc = print_output(model, y_train, y_test, rng_seed)
 #         max_batch = i
 
-unique, counts = np.unique(y_train, return_counts=True)
+unique, counts = np.unique(y, return_counts=True)
 class_count_dict = dict(zip(unique, counts))
 
 # class_weight = {0 : len(y_train) / (class_count_dict[0]),
@@ -125,14 +125,14 @@ class_count_dict = dict(zip(unique, counts))
 
 
 
-model.fit(X_train, y_train_ohe, epochs=500, batch_size=128, verbose=1, validation_split=0.1) # cross val to estimate test error
-predict = model.predict_classes(X_test, batch_size=64)
-unique, counts = np.unique(predict, return_counts=True)
-class_count_dict = dict(zip(unique, counts))
-print(class_count_dict)
+model.fit(X, y_ohe, epochs=500, batch_size=128, shuffle=True, verbose=1, validation_split=0.25) # cross val to estimate test error
+# predict = model.predict_classes(X_test, batch_size=64)
+# unique, counts = np.unique(predict, return_counts=True)
+# class_count_dict = dict(zip(unique, counts))
+# print(class_count_dict)
 
 # predict = []
-predict2 = model.predict(X_test, batch_size=64)
+# predict2 = model.predict(X_test, batch_size=64)
 # for i, temp in enumerate(predict2):
 #     x0 = predict2[i,0] * 1 * -7.5
 #     x1 = predict2[i,1] * 1 * 0.5
