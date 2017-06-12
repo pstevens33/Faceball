@@ -22,7 +22,7 @@ These images were fed through a facial detection process in order to crop and al
 
 
 ### Neural Net
-I implemented a fairly standard convolutional neural network. 
+I implemented a fairly standard convolutional neural network. Will go into detail later...
 
 #### Results
 
@@ -41,6 +41,16 @@ The main takeaway from this project can be shown in the following graph:
 </center>
 
 The images in the test set were divided up into their classes and the average model predictions were recorded. It is clear that the model's predictions on unseen data show a positive trend in facial features and success.
+
+### Reconstructing the Perfect Player
+Using Eigenfaces, a form of Principle Component Analysis, I was able to decompose the images of players in each class and reassemble them into 1 face. Here is the breakdown (0 on the left to 5 on the right).
+
+![alt text](src/pyfacescmd/average_0.png "eigenface_0")
+![alt text](src/pyfacescmd/average_1.png "eigenface_1")
+![alt text](src/pyfacescmd/average_2.png "eigenface_2")
+![alt text](src/pyfacescmd/average_3.png "eigenface_3")
+![alt text](src/pyfacescmd/average_4.png "eigenface_4")
+![alt text](src/pyfacescmd/average_5.png "eigenface_5")
 
 ### Future Directions:
 
