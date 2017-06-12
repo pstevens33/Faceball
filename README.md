@@ -16,9 +16,9 @@ All of the images of the MLB players were scraped along with their total WAR sta
 These images were fed through a facial detection process in order to crop and align each face to the center of a 128x128, greyscale image. Lastly, these projected face images were converted to numpy arrays, ready to be fed into the neural net. Below is an example of the raw image and the projected image.
 
 <center>
-![alt text](misc_images/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg "Raw Image") 
+<img src="misc_images/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg" alt="Raw Image"/>
 <img src="misc_images/arrow.png" alt="Arrow Image" style="width: 100px; height: 100px; margin-left: 20px; margin-right: 20px;"/>
-![alt text](misc_images/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg "Projected Image")
+<img src="misc_images/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image"/>
 </center>
 
 ### Neural Net
@@ -26,10 +26,10 @@ I implemented a fairly standard convolutional neural network.
 
 #### Results
 
-* The classes were very imbalanced. About 68% of the data were 0's, 20% 1's, and decreasing as you go to 5. This imbalance coupled with the fact that facial features are only a very slight predictor of success, means that the accuracy of any model created will only decrease as the model starts to predict values other than 0. The goal of this model is to minimize the loss (reduce the prediction error). Any increase in accuracy is just a bonus.
+The classes were very imbalanced. About 68% of the data were 0's, 20% 1's, and decreasing as you go to 5. This imbalance coupled with the fact that facial features are only a very slight predictor of success, means that the accuracy of any model created will only decrease as the model starts to predict values other than 0. The goal of this model is to minimize the loss (reduce the prediction error). Any increase in accuracy is just a bonus.
 
 <center>
-    ![alt text](misc_images/loss_300_binary_sigmoid_adam_0.35.png "Loss Graph")
+    <img src="misc_images/loss_300_binary_sigmoid_adam_0.35.png" alt="Loss Graph")
 </center>
     
 You can see how the training loss continues to decrease as the model learns. The test loss decreases significantly up until 60 epochs and then begins to rise a bit, probably due to over fitting.
@@ -37,7 +37,7 @@ You can see how the training loss continues to decrease as the model learns. The
 The main takeaway from this project can be shown in the following graph:
 
 <center>
-![alt text](misc_images/sigmoid_binary_300_prediction_trend.png "Prediction Trend Graph")
+<img src="misc_images/sigmoid_binary_300_prediction_trend.png" alt="Prediction Trend Graph")
 </center>
 
 The images in the test set were divided up into their classes and the average model predictions were recorded. It is clear that the model's predictions on unseen data show a positive trend in facial features and success.
