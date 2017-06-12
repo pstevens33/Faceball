@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from flask import make_response
 from functools import wraps, update_wrapper
 from datetime import datetime
@@ -42,6 +42,7 @@ def allowed_file(filename):
     
 @app.route('/score', methods=['GET', 'POST'])
 def score():
+    data = []
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -59,6 +60,7 @@ def score():
             file.save(file_path)
             projected = project_face(file_path)
             if projected == True:
+                data.append(file.filename)
                 prepared_image = process_image(file_path[8:])
                 prediction = model.predict(prepared_image)[0]
                 score = 0
@@ -81,6 +83,8 @@ def score():
                 score = round(score,0)
                 print(prediction)
                 print(score)
+                data.append(score)
+                print(data)
                 
         
     # onlyfiles = [f for f in listdir('static/img/players') if isfile(join('static/img/players', f))]
@@ -94,7 +98,12 @@ def score():
     #         
     
 
-    return render_template('score.html', data=[score])
+    return render_template('score.html', data=data)
+    
+@app.route('/projected_faces_web/<path:filename>')    
+def download_file(filename):
+    return send_from_directory('projected_faces_web', filename, as_attachment=True)
+    
 
 @app.route('/howitworks')
 def howitworks():
@@ -103,6 +112,11 @@ def howitworks():
 @app.route('/perfection')
 def perfection():
     return render_template('perfection.html')
+    
+@app.route('/pudding')
+def pudding():
+    return render_template('pudding.html')
+    
 
 
 @app.after_request

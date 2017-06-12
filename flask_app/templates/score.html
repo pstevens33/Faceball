@@ -11,12 +11,14 @@
 {% endblock %}
 {% block content %}
     
+    
+    
     <br>
     <br>
 
-    {% if data[0] < 40 %}
+    {% if data[1] < 40 %}
         <center><h1 id="results-text">Don't quit your day job...</h1></center>
-    {% elif data[0] < 70 %}
+    {% elif data[1] < 70 %}
         <center><h1 id="results-text">Hey, you're pretty good!</h1></center>
     {% else %}
         <center><h1 id="results-text">You're a natural!</h1></center>
@@ -28,6 +30,11 @@
     
     
     <center><div class="js-gauge demo gauge" id="score-gauge"></div></center>
+    
+    <center>
+        <p>Based on your projected face.</p>
+        <img src='../projected_faces_web/{{data[0]}}' alt="Projected Image">
+    </center>
 
     
 
@@ -45,7 +52,7 @@
 
 
 $('.demo').kumaGauge({
-  value : {{ data[0] }},
+  value : {{ data[1] }},
   animationSpeed : 1000,
   showNeedle : false,
   // background : '#4EA9D7',

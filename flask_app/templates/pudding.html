@@ -1,0 +1,101 @@
+<head>
+  <!-- Latest compiled and minified CSS -->
+
+  <!-- ************************************ Bootstrap ************************************ -->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <!-- ************************************ Bootstrap   ************************************ -->
+  <!-- ************************************   CSS   **************************************** -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
+
+  <!-- ************************************   CSS   **************************************** -->
+
+  <!-- ************************************   JQuery **************************************** -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- ************************************   JQuery **************************************** -->
+
+  <title>Pudding</title>
+</head>
+<br>
+<div class="container">
+        <br>
+        <br>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <center>
+                <div class="pudding-title">
+                    Faceball
+                </div>
+                <div class="pudding-subtitle">
+                    Predicting Success in the MLB based on Facial Features
+                </div>
+                <div class="pudding-author">
+                    by <strong>Parker Stevens</strong>
+                </div>
+            </center>
+            <div class="pudding-content">
+                <p class="pudding-paragraph">
+                    What makes a good baseball player? Some will tell you that it's his speed. His athleticism. His eye for the baseball. Most coaches will tell you that it's his size and frame. No doubt, these factors all play a part in the recipe for a good baseball player. But if you listen to the old scouts, the ones that have been doing it the longest, since before moneyball and statistics determined a player's value, you'll hear them tell you what they think of the player's face. Very scientific stuff. 
+                </p>
+                <p class="pudding-paragraph">
+                    Before you discredit these scouts as "behind the times", let's give it a little thought and exploration. After all, some generalizations have roots that actually bear some fact. 
+                </p>
+                <p class="pudding-paragraph">
+                    Since the inception of Major League Baseball in 1871, there have been 19,022 people to play the game. Of that, 13,434 were born in the United States of America and have an obtainable picture of their face. It is important to take only American born players as we are analyzing for facial generalizations and not racially or culturally differentiating characteristics.
+                </p>
+                <p class="pudding-paragraph">
+                    All of the images of the MLB players were obtained along with their total WAR stats. WAR stands for "Wins Above Replacement." A "replacement" is equivalent to a triple-A free agent (A player that is available and can be picked up on a whim when in need of a replacement). That being said, the total WAR values were divided by the number of years played by each player to obtain their average WAR over their career. A WAR of 0 means that the player produced 0 more wins than a replacement, meaning that he is an average ball player. A WAR of 5 or more (player produced 5 wins above what a replacement could produce) indicates that he is a perennial All-Star.
+                </p>
+                <p class="pudding-paragraph">
+                    All of this data was fed into a <strong>convolutional neural network</strong> which is basically just a machine learning program that scans pictures piece by piece until it understands the data. When it has learned all of the data, it can make predictions on new data fed to it. Cool, right?
+                </p>
+                <p class="pudding-paragraph">
+                    So what does this neural network tell us?
+                </p>
+                <p class="pudding-paragraph large-text">
+                    THE SCOUTS WERE RIGHT...kind of.
+                </p>
+                <p class="pudding-paragraph">
+                    Below is a graph of the model's predictions for pictures in each class, 1 through 5.
+                </p>
+                <center>
+                    <img src='../static/img/sigmoid_binary_300_prediction_trend.png' alt='Prediction Trend Graph'>
+                </center>
+                <p class="pudding-paragraph">
+                    Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that there is a definite trend! The next step is to determine what features make our model predict who's good and who's not.
+                </p>
+                <p class="pudding-paragraph">
+                    To do that we'll need to employ a method called <strong>pricipal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. Doing this, we can average the pictures of each class and note differences between them. The pictures represent the average of the faces of each class, 0 to 5, from left to right.
+                </p>
+                <center>
+                        <img class="eigen-pics" src='../static/img/average_0.png' alt='Average Face 0'>
+                        <img class="eigen-pics" src='../static/img/average_1.png' alt='Average Face 1'>
+                        <img class="eigen-pics" src='../static/img/average_2.png' alt='Average Face 2'>
+                        <img class="eigen-pics" src='../static/img/average_3.png' alt='Average Face 3'>
+                        <img class="eigen-pics" src='../static/img/average_4.png' alt='Average Face 4'>
+                        <img class="eigen-pics" src='../static/img/average_5.png' alt='Average Face 5'>
+                </center>
+                <br>
+                <p class="pudding-paragraph">
+                    It seems as though class 5 (right picture) has a more serious demeanor than the others. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to here what y'all think so leave a comment and let me know!
+                </p>
+                <hr>
+                <p class="pudding-paragraph">
+                    But what about you? Do you think your beautiful face is cut out for the MLB? <a href='/predict'><strong>See for yourself!</strong></a>
+                </p>
+                
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+</div>
+

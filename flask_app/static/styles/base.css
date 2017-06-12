@@ -28,7 +28,7 @@ h1 {
     color: blue;
     padding-top: 30px;
     margin-top: 100px;
-    background-color: rgba(0, 0, 0, 0.6); !important;
+    background-color: rgba(255, 255, 255, 0.6); !important;
     /*opacity: 0.75;*/
     background-size: 10%;
     z-index: 1;
@@ -54,4 +54,37 @@ h1 {
 
 #results-text {
     color: #7528c1;
+}
+
+.pudding-title {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+
+.pudding-subtitle {
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.pudding-author {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.pudding-content {
+    font-size: 16px;
+}
+
+.pudding-paragraph {
+    margin-bottom: 25px;
+}
+
+.large-text {
+    font-size: 40px;
+}
+
+.eigen-pics {
+
+    width: 15%;
+    display: inline-block;
 }
