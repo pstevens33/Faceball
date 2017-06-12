@@ -43,7 +43,7 @@ def deprocess_image(x):
     return x
 
 # build the VGG16 network with ImageNet weights
-model = load_model('../data/models/gpu_500.h5')
+model = load_model('../data/models/gpu_500_players.h5')
 print('Model loaded.')
 
 model.summary()
@@ -71,7 +71,7 @@ for filter_index in range(128):
     # we build a loss function that maximizes the activation
     # of the nth filter of the layer considered
     layer_output = layer_dict[layer_name].output
-    loss = K.mean(model.output[:, 1])
+    loss = K.mean(model.output[:, 0])
     # if K.image_data_format() == 'channels_first':
     #     loss = K.mean(layer_output[:, filter_index, :, :])
     # else:
@@ -101,7 +101,7 @@ for filter_index in range(128):
         input_img_data += grads_value * step
         i+=1
 
-        print('Current loss value:{}........{}'.format(round(loss_value,4), i) )
+        print('Current loss value:{}........{}'.format(np.round(loss_value,4), i) )
         if loss_value <= 0.:
             # some filters get stuck to 0, we can skip them
             break
@@ -157,12 +157,12 @@ for filter_index in range(128):
     input_img_data = (input_img_data - 0.5) * 20 + 128
 
     if max_loss_index == filter_index:
-        for i in range(10000):
+        for i in range(1000):
             loss_value, grads_value = iterate([input_img_data])
             input_img_data += grads_value * step
             i+=1
 
-            print('Current loss value:{}........{}'.format(round(loss_value,4), i) )
+            print('Current loss value:{}........{}'.format(np.round(loss_value,4), i) )
             if loss_value <= 0.:
                 # some filters get stuck to 0, we can skip them
                 break
@@ -180,7 +180,7 @@ for filter_index in range(128):
             input_img_data += grads_value * step
             i+=1
 
-            print('Current loss value:{}........{}'.format(round(loss_value,4), i) )
+            print('Current loss value:{}........{}'.format(np.round(loss_value,4), i) )
             if loss_value <= 0.:
                 # some filters get stuck to 0, we can skip them
                 break
@@ -216,4 +216,4 @@ for i in range(1):
                          (img_height + margin) * j: (img_height + margin) * j + img_height] = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 # save the result to disk
-imsave('visualizations/max_0_GPU500_32x32x64x64x128.png', stitched_filters)
+imsave('visualizations/max_1_GPU_500_idkwhatloss_32x32x64x64x128.png', stitched_filters)
