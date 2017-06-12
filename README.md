@@ -17,7 +17,7 @@ These images were fed through a facial detection process in order to crop and al
 
 ![alt text](misc_images/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg "Raw Image") 
 ----------------->
-![alt text](misc_images/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg "Projected Image")
+![alt text](misc_images/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg "Projected Image")
 
 ### Neural Net
 I implemented a fairly standard convolutional neural network. 
