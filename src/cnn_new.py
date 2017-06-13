@@ -75,21 +75,7 @@ model.add(Dense(input_dim=128,
                  init='uniform',
                  activation='relu'))
 # model.add(Dropout(0.5))
-model.add(Dense(input_dim=num_neurons_in_layer,
-                 output_dim=num_neurons_in_layer,
-                 init='uniform',
-                 activation='relu'))
-# model.add(Dropout(0.5))
-model.add(Dense(input_dim=num_neurons_in_layer,
-                 output_dim=num_neurons_in_layer,
-                 init='uniform',
-                 activation='relu'))
-# model.add(Dropout(0.5))
-model.add(Dense(input_dim=num_neurons_in_layer,
-                 output_dim=num_neurons_in_layer,
-                 init='uniform',
-                 activation='relu'))
-# model.add(Dropout(0.5))
+
 model.add(Dense(input_dim=num_neurons_in_layer,
                  output_dim=num_classes,
                  init='uniform',
@@ -110,7 +96,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/acc_300_mse_sigmoid_adam_0.35_5full.png')
+plt.savefig('../data/plots/acc_300_mse_sigmoid_adam_0.35_2full.png')
 plt.close()
 
 plt.plot(history.history['loss'])
@@ -119,7 +105,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/loss_300_mse_sigmoid_adam_0.35_5full.png')
+plt.savefig('../data/plots/loss_300_mse_sigmoid_adam_0.35_2full.png')
 plt.close()
 
-model.save('../data/models/300_mse_sigmoid_adam_0.35_5full.h5')
+model.save('../data/models/300_mse_sigmoid_adam_0.35_2full.h5')
