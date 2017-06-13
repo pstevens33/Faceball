@@ -49,23 +49,23 @@ num_classes = y_ohe.shape[1]  # number of classes, 0-9
 
 model.add(Conv2D(32, 3, 3, input_shape=input_shape, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.35))
+model.add(Dropout(0.20))
 
 model.add(Conv2D(32, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.35))
+model.add(Dropout(0.20))
 
 model.add(Conv2D(64, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.35))
+model.add(Dropout(0.20))
 
 model.add(Conv2D(64, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.35))
+model.add(Dropout(0.20))
 
 model.add(Conv2D(128, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.35))
+model.add(Dropout(0.20))
 
 model.add(Flatten())
 
@@ -233,7 +233,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/acc_300_mse_sigmoid_adam_0.35.png')
+plt.savefig('../data/plots/acc_300_mse_sigmoid_adam_0.20.png')
 plt.close()
 
 plt.plot(history.history['loss'])
@@ -242,7 +242,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/loss_300_mse_sigmoid_adam_0.35.png')
+plt.savefig('../data/plots/loss_300_mse_sigmoid_adam_0.20.png')
 plt.close()
 
-model.save('../data/models/300_mse_sigmoid_adam_0.35.h5')
+model.save('../data/models/300_mse_sigmoid_adam_0.20.h5')
