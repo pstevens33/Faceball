@@ -23,26 +23,91 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <!-- ************************************   JQuery **************************************** -->
+  
+  <!-- ************************************   Font   **************************************** -->
+  
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  
+  <!-- ************************************   Font   **************************************** -->
+  
+  <!-- ************************************   D3   **************************************** -->
+  
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  
+  <!-- ************************************   D3   **************************************** -->
 
   <title>Pudding</title>
+  <style>
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .bar {
+    fill: orange;
+  }
+
+  .bar:hover {
+    fill: orangered ;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  .d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+  }
+
+  /* Creates a small triangle extender for the tooltip */
+  .d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+  }
+
+  /* Style northward tooltips differently */
+  .d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+  }
+  </style>
 </head>
 <br>
+<div class="black-top">
+    <center>
+        <div class="pudding-title">
+            Faceball
+        </div>
+        <div class="pudding-subtitle">
+            Predicting Success in the MLB based on Facial Features
+        </div>
+        <div class="pudding-author">
+            by <strong>Parker Stevens</strong>
+        </div>
+    </center>
+</div>
 <div class="container">
         <br>
         <br>
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
-            <center>
-                <div class="pudding-title">
-                    Faceball
-                </div>
-                <div class="pudding-subtitle">
-                    Predicting Success in the MLB based on Facial Features
-                </div>
-                <div class="pudding-author">
-                    by <strong>Parker Stevens</strong>
-                </div>
-            </center>
             <div class="pudding-content">
                 <p class="pudding-paragraph">
                     What makes a good baseball player? Some will tell you that it's his speed. His athleticism. His eye for the baseball. Most coaches will tell you that it's his size and frame. No doubt, these factors all play a part in the recipe for a good baseball player. But if you listen to the old scouts, the ones that have been doing it the longest, since before moneyball and statistics determined a player's value, you'll hear them tell you what they think of the player's face. Very scientific stuff. 
@@ -66,16 +131,17 @@
                     THE SCOUTS WERE RIGHT...kind of.
                 </p>
                 <p class="pudding-paragraph">
-                    Below is a graph of the model's predictions for pictures in each class, 1 through 5.
+                    The images were split into the classes to which they belonged and the model made predictions on each class. The average prediction for each class is recorded below. You can see how the model actually predicts higher values for the higher classes.
                 </p>
-                <center>
-                    <img src='../static/img/sigmoid_binary_300_prediction_trend.png' alt='Prediction Trend Graph'>
-                </center>
+                <!-- <img class="pudding-chart" src='../static/img/sigmoid_binary_300_prediction_trend.png' alt='Prediction Trend Graph'> -->
+                    
+                <svg id="svg-trend" width="200" height="400"></svg>
+                
                 <p class="pudding-paragraph">
-                    Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that there is a definite trend! The next step is to determine what features make our model predict who's good and who's not.
+                    Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that, there is a definite trend! The next step is to determine what features make our model predict who's good and who's not.
                 </p>
                 <p class="pudding-paragraph">
-                    To do that we'll need to employ a method called <strong>pricipal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. Doing this, we can average the pictures of each class and note differences between them. The pictures represent the average of the faces of each class, 0 to 5, from left to right.
+                    To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. Doing this, we can average the pictures of each class and note differences between them. The pictures represent the average of the faces for each class, 0 to 5, from left to right.
                 </p>
                 <center>
                         <img class="eigen-pics" src='../static/img/average_0.png' alt='Average Face 0'>
@@ -87,7 +153,7 @@
                 </center>
                 <br>
                 <p class="pudding-paragraph">
-                    It seems as though class 5 (right picture) has a more serious demeanor than the others. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to here what y'all think so leave a comment and let me know!
+                    It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to here what y'all think so leave a comment and let me know!
                 </p>
                 <hr>
                 <p class="pudding-paragraph">
@@ -99,3 +165,79 @@
         <div class="col-sm-2"></div>
 </div>
 
+<script>
+
+var margin = {top: 40, right: 20, bottom: 30, left: 40},
+    width = 600 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var formatPercent = d3.format("");
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(formatPercent);
+
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
+  })
+
+var svg = d3.select("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);
+
+d3.csv("/endpoint", type, function(error, data) {
+  x.domain(data.map(function(d) { return d.letter; }));
+  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Frequency");
+
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.letter); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.frequency); })
+      .attr("height", function(d) { return height - y(d.frequency); })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+
+});
+
+function type(d) {
+  d.frequency = +d.frequency;
+  return d;
+}
+
+</script>

@@ -9,23 +9,28 @@
  
 {% endblock %}
 {% block content %}
-
-    <h1>Submit a picture for prediction</h1>
-    <br>
-    
-    
-
-    
-    <br>
-    <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form">
-        <input type="file" name="file"><br /><br />
-        <input id="submit-button" type="submit" value="Upload">
-    </form>
-    
-    <div id="loadingDiv">
-        <center><h2>Sit tight, we're predicting your success</h2></center>
-        <center><img src="/static/gif/spinning-baseball.gif"></center>
+<div class="container">
+    <center>
+        <br>
+        <h1>Submit a picture for prediction</h1>
+        <br>
+    </center>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <center>
+            <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form">
+                <input type="file" name="file"><br /><br />
+                <input id="submit-button" type="submit" value="Upload">
+            </form>
+            <div id="loadingDiv">
+                <center><h2>Sit tight, we're predicting your success</h2></center>
+                <center><img src="/static/gif/spinning-baseball.gif"></center>
+            </div>
+        </center>
+        
     </div>
+    <div class="col-md-4"></div>
+</div>
 
 
 

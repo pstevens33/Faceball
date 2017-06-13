@@ -1,6 +1,16 @@
+body {
+    font-family: 'Slabo 27px', serif;
+}
+
 h1 {
-    color: blue;
+    color: #7528c1;
     font-size: 30px;
+}
+
+#footer {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
 }
 
 .navbar-brand {
@@ -24,7 +34,7 @@ h1 {
     text-align: center;
     color: #7528c1 !important;
     width: 50%;
-    height: 50%;
+    height: 270px;
     color: blue;
     padding-top: 30px;
     margin-top: 100px;
@@ -42,6 +52,7 @@ h1 {
 }
 
 #jumbotron-button {
+    margin-top: 20px;
     color: #7528c1;
     background-color: black;
 }
@@ -58,16 +69,16 @@ h1 {
 
 .pudding-title {
     font-size: 80px;
-    margin-bottom: 20px;
 }
 
 .pudding-subtitle {
     font-size: 20px;
-    margin-bottom: 40px;
+    margin-top: 100px;
 }
 
 .pudding-author {
     font-size: 16px;
+    margin-top: 100px;
     margin-bottom: 30px;
 }
 
@@ -87,4 +98,44 @@ h1 {
 
     width: 15%;
     display: inline-block;
+}
+
+#submit-form {
+    margin-top: 30px;
+    border-radius: 3%;
+    border-color: black;
+    border-style: solid;
+    border-width: medium;
+    padding: 7px;
+}
+
+.black-top {
+    margin-top: -20px;
+    padding-top: 100px;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    color: white;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+.pudding-chart.center {
+    display: inline-block;;
+    margin: 0 auto;
+}
+
+#svg-trend {
+    width: 600px;
+    margin-bottom: 10px;
 }

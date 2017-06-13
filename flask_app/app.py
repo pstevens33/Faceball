@@ -6,6 +6,7 @@ import os
 from os import listdir
 from os.path import isfile, join
 from werkzeug import secure_filename
+import pandas as pd
 
 import numpy as np
 from keras.models import load_model
@@ -117,6 +118,15 @@ def perfection():
 def pudding():
     return render_template('pudding.html')
     
+@app.route('/test')
+def test():
+    return render_template('test.html')
+    
+@app.route('/endpoint')
+def get_d3_data():
+    df = pd.read_csv('data.csv') # Constructed however you need it
+    return df.to_csv()
+    
 
 
 @app.after_request
@@ -129,6 +139,6 @@ def add_header(response):
 
 
 if __name__ == '__main__':
-    X = np.load('../data/X_players.npy')
-    model = load_model('../data/models/gpu_300_players_sigmoid_binary.h5')
+    # X = np.load('../data/X_players.npy')
+    # model = load_model('../data/models/gpu_300_players_sigmoid_binary.h5')
     app.run(host='0.0.0.0', port=8080, debug=True)
