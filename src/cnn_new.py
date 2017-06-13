@@ -81,7 +81,7 @@ model.add(Dense(input_dim=num_neurons_in_layer,
                  init='uniform',
                  activation='sigmoid')) # only 12 neurons - keep softmax at last layer
 sgd = SGD(lr=0.001, decay=1e-7, momentum=0.95) # using stochastic gradient descent (keep)
-model.compile(loss='mse', optimizer='adam', metrics=['accuracy'] ) # (keep)
+model.compile(loss='binary-crossentropy', optimizer='adam', metrics=['accuracy'] ) # (keep)
 
 
 unique, counts = np.unique(y, return_counts=True)
@@ -96,7 +96,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/acc_300_mse_sigmoid_adam_0.35_2full.png')
+plt.savefig('../data/plots/acc_300_binary_sigmoid_adam_0.35_2full.png')
 plt.close()
 
 plt.plot(history.history['loss'])
@@ -105,7 +105,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/loss_300_mse_sigmoid_adam_0.35_2full.png')
+plt.savefig('../data/plots/loss_300_binary_sigmoid_adam_0.35_2full.png')
 plt.close()
 
-model.save('../data/models/300_mse_sigmoid_adam_0.35_2full.h5')
+model.save('../data/models/300_binary_sigmoid_adam_0.35_2full.h5')
