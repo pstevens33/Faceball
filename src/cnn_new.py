@@ -71,12 +71,6 @@ model.add(Dropout(0.35))
 model.add(Flatten())
 
 model.add(Dense(input_dim=128,
-                 output_dim=num_neurons_in_layer,
-                 init='uniform',
-                 activation='relu'))
-# model.add(Dropout(0.5))
-
-model.add(Dense(input_dim=num_neurons_in_layer,
                  output_dim=num_classes,
                  init='uniform',
                  activation='sigmoid')) # only 12 neurons - keep softmax at last layer
@@ -96,7 +90,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/acc_300_binary_sigmoid_adam_0.35_2full.png')
+plt.savefig('../data/plots/acc_300_binary_sigmoid_adam_0.35_1full.png')
 plt.close()
 
 plt.plot(history.history['loss'])
@@ -105,7 +99,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('../data/plots/loss_300_binary_sigmoid_adam_0.35_2full.png')
+plt.savefig('../data/plots/loss_300_binary_sigmoid_adam_0.35_1full.png')
 plt.close()
 
-model.save('../data/models/300_binary_sigmoid_adam_0.35_2full.h5')
+model.save('../data/models/300_binary_sigmoid_adam_0.35_1full.h5')
