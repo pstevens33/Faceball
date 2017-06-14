@@ -128,19 +128,6 @@ def get_d3_data():
     return df.to_csv()
     
 
-@app.after_request
-def add_header(response):
-    response.cache_control.max_age = 300
-    return response
-
-# @app.context_processor
-# def inject_data():
-#     return dict(model_data=g.data)
-    
-
-# @app.before_request
-# def before_request():
-#     g.data = {'path': 5}
 
 @app.route('/read_json')
 def read_json():
@@ -151,6 +138,5 @@ def read_json():
 
 
 if __name__ == '__main__':
-    # X = np.load('../data/X_players.npy')
-    model = load_model('../data/models/gpu_300_players_sigmoid_binary.h5')
+    model = load_model('models/gpu_300_players_sigmoid_binary.h5')
     app.run(host='0.0.0.0', port=8080, debug=True)
