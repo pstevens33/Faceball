@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, send_from_directory, jsonify, Response
+from flask import Flask, render_template, request, send_from_directory, jsonify, Response, g
+from flask_socketio import SocketIO, emit
 from flask import make_response
 from functools import wraps, update_wrapper
 from datetime import datetime
 import os
+import json
 from os import listdir
 from os.path import isfile, join
 from werkzeug import secure_filename
@@ -17,8 +19,10 @@ from project_faces_web import project_face
 from image_processing_web import process_image
 
 
-
+async_mode = None
 app = Flask(__name__)
+socketio = SocketIO(app, async_mode=async_mode)
+thread = None
 
 # This is the path to the upload directory
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -28,6 +32,7 @@ app.config['MAX_CONTENT_PATH'] = 4000000
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 3
 
+global_model_data = {}
 
 @app.route('/')
 def index():
@@ -86,13 +91,15 @@ def score():
                 data.append(score)      
     
     print(data)
-    return "cool", 204
+    global_model_data = {'path': data[0], 'score': data[1]}
+    with open('json_returns/model_return.json', 'w') as outfile:
+        json.dump(global_model_data, outfile)
+    return jsonify(data), 204
 
-
+@app.route('/get_model_data')
+def get_model_data():
+    return jsonify(global_model_data)
     
-    
-def _score(json_argument):
-    return 
     
 @app.route('/projected_faces_web/<path:filename>')    
 def download_file(filename):
@@ -120,22 +127,26 @@ def get_d3_data():
     df = pd.read_csv('data.csv') # Constructed however you need it
     return df.to_csv()
     
-# @app.context_processor
-# def inject_path_and_score(path, score):
-#     return dict(path=path, score=score)
 
 @app.after_request
 def add_header(response):
     response.cache_control.max_age = 300
     return response
+
+# @app.context_processor
+# def inject_data():
+#     return dict(model_data=g.data)
     
-@app.context_processor
-def some_processor():
-    def path_and_score(path, score):
-        return path
-    return {'path_and_score': path_and_score}
 
+# @app.before_request
+# def before_request():
+#     g.data = {'path': 5}
 
+@app.route('/read_json')
+def read_json():
+    with open('json_returns/model_return.json') as data_file:    
+        data = json.load(data_file)
+    return jsonify(data)
 
 
 

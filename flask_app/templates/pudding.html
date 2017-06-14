@@ -6,6 +6,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
   <script src="../static/js/kuma-gauge.jquery.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 
   <!-- ************************************   JQuery **************************************** -->
 
@@ -142,6 +143,9 @@
                 <p class="pudding-paragraph">
                     Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that, there is a definite trend! 
                 </p>
+                <p class="pudding-paragraph">
+                    But what about you? Do you think your beautiful face is cut out for the MLB? Upload a picture to see what the model thinks!
+                </p>
                 <center>
                     <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form" role="form">
                         <input type="file" name="file"><br /><br />
@@ -153,11 +157,30 @@
                     </div>
                 </center>
                 
-                <center><div class="js-gauge demo gauge" id="score-gauge"></div></center>
+                <center>
+                    <div class="js-gauge demo gauge" id="score-gauge-0"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-1"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-2"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-3"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-4"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-5"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-6"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-7"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-8"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-9"></div>
+                    <div class="js-gauge demo gauge" id="score-gauge-10"></div>
+                    
+                    
+                    <div id="hidden-pic">
+                        <p>Based on your projected face.</p>
+                        <img id="projected-image" src='../projected_faces_web/dizzy.jpg' alt="Projected Image">
+                        <br>
+                        <br>
+                        <input id="reset-button" type="submit" value="Try Again">
+                    </div>
+                </center>
 
-                <p class="pudding-paragraph">
-                    But what about you? Do you think your beautiful face is cut out for the MLB? <a href='/predict' target="_blank"><strong>See for yourself!</strong></a>
-                </p>
+                
                 <p class="pudding-paragraph">
                     The next step is to determine what features make our model predict who's good and who's not. To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. Doing this, we can average the pictures of each class and note differences between them. The pictures represent the average of the faces for each class, 0 to 5, from left to right.
                 </p>
@@ -174,6 +197,7 @@
                     It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to here what y'all think so leave a comment and let me know!
                 </p>
                 <hr>
+                <div id="log"></div>
                 
                 
                 
@@ -183,6 +207,10 @@
 </div>
 
 <script>
+var upload_count = 0;
+
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
 
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
     width = 700 - margin.left - margin.right,
@@ -257,9 +285,11 @@ function type(d) {
   return d;
 }
 
-var $loading = $('#loadingDiv').hide();
+$('#loadingDiv').hide();
+$('#hidden-pic').hide();
 
 $("#submit-button").click(function(){
+
     $('#submit-form').hide();
     $('#loadingDiv').show();
     $.ajax({
@@ -270,24 +300,37 @@ $("#submit-button").click(function(){
         contentType: false,
     }).done(function(){
       console.log("Success: Files sent!");
-      $('#loadingDiv').hide();
-      $('.demo').kumaGauge({
-        value : {{ 50 }},
-        animationSpeed : 1000,
-        showNeedle : false,
-        // background : '#4EA9D7',
-        label : {
-            display: true,
-            left: '0',
-            right: '100',
-            fontColor : '#E31E81',
-            fontSize : 16,
-        }
-      });
-      alert({{ path_and_score('temp', 65) }});
+      
+    
+    $.getJSON('/read_json', function(json) {
+        $('#loadingDiv').hide();
+        $("#projected-image").attr("src","../projected_faces_web/" + json['path']);
+        $('.demo#score-gauge-'+upload_count).kumaGauge({
+          value : json['score'],
+          animationSpeed : 1000,
+          showNeedle : false,
+          // background : '#4EA9D7',
+          label : {
+              display: true,
+              left: '0',
+              right: '100',
+              fontColor : '#E31E81',
+              fontSize : 16,
+          }
+        });
+        $("#hidden-pic").show();
+    });
     }).fail(function(){
       console.log("An error occurred, the files couldn't be sent!");
     });
+});
+
+$("#reset-button").click(function(){
+    $("#gauge-0").remove();
+    // $('.demo').replace();
+    $("#hidden-pic").hide();
+    $('#submit-form').show();
+    upload_count++;
 });
 
 
