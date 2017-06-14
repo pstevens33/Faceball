@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, jsonify, Response
 from flask import make_response
 from functools import wraps, update_wrapper
 from datetime import datetime
@@ -41,7 +41,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS    
     
-@app.route('/score', methods=['GET', 'POST'])
+@app.route('/score', methods=['POST'])
 def score():
     data = []
     if request.method == 'POST':
@@ -83,23 +83,16 @@ def score():
                 #     score = 100
                 score = round(score,0)
                 print(prediction)
-                print(score)
-                data.append(score)
-                print(data)
-                
-        
-    # onlyfiles = [f for f in listdir('static/img/players') if isfile(join('static/img/players', f))]
-    # paths = []
-    # for i in onlyfiles:
-    #     paths.append('img/players/' + i)
-    # random_index = np.random.randint(X.shape[0])
-    # upload_picture = X[random_index]
-    # upload_picture = upload_picture.reshape((1,) + upload_picture.shape)
-    # 
-    #         
+                data.append(score)      
     
+    print(data)
+    return "cool", 204
 
-    return render_template('score.html', data=data)
+
+    
+    
+def _score(json_argument):
+    return 
     
 @app.route('/projected_faces_web/<path:filename>')    
 def download_file(filename):
@@ -127,12 +120,20 @@ def get_d3_data():
     df = pd.read_csv('data.csv') # Constructed however you need it
     return df.to_csv()
     
-
+# @app.context_processor
+# def inject_path_and_score(path, score):
+#     return dict(path=path, score=score)
 
 @app.after_request
 def add_header(response):
     response.cache_control.max_age = 300
     return response
+    
+@app.context_processor
+def some_processor():
+    def path_and_score(path, score):
+        return path
+    return {'path_and_score': path_and_score}
 
 
 
@@ -140,5 +141,5 @@ def add_header(response):
 
 if __name__ == '__main__':
     # X = np.load('../data/X_players.npy')
-    # model = load_model('../data/models/gpu_300_players_sigmoid_binary.h5')
+    model = load_model('../data/models/gpu_300_players_sigmoid_binary.h5')
     app.run(host='0.0.0.0', port=8080, debug=True)

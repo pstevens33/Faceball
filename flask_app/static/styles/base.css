@@ -136,6 +136,11 @@ h1 {
 }
 
 #svg-trend {
-    width: 600px;
+    width: 900px;
     margin-bottom: 10px;
+}
+
+#scout-gif {
+    margin-top: 40px;
+    margin-bottom: 60px;
 }

@@ -1,5 +1,13 @@
 <head>
   <!-- Latest compiled and minified CSS -->
+  
+  <!-- ************************************   JQuery **************************************** -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+  <script src="../static/js/kuma-gauge.jquery.js"></script>
+
+  <!-- ************************************   JQuery **************************************** -->
 
   <!-- ************************************ Bootstrap ************************************ -->
 
@@ -17,12 +25,6 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
 
   <!-- ************************************   CSS   **************************************** -->
-
-  <!-- ************************************   JQuery **************************************** -->
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <!-- ************************************   JQuery **************************************** -->
   
   <!-- ************************************   Font   **************************************** -->
   
@@ -112,6 +114,9 @@
                 <p class="pudding-paragraph">
                     What makes a good baseball player? Some will tell you that it's his speed. His athleticism. His eye for the baseball. Most coaches will tell you that it's his size and frame. No doubt, these factors all play a part in the recipe for a good baseball player. But if you listen to the old scouts, the ones that have been doing it the longest, since before moneyball and statistics determined a player's value, you'll hear them tell you what they think of the player's face. Very scientific stuff. 
                 </p>
+                <div id="scout-gif">
+                    <center><img src="/static/gif/scout.gif"></center>
+                </div>
                 <p class="pudding-paragraph">
                     Before you discredit these scouts as "behind the times", let's give it a little thought and exploration. After all, some generalizations have roots that actually bear some fact. 
                 </p>
@@ -133,15 +138,28 @@
                 <p class="pudding-paragraph">
                     The images were split into the classes to which they belonged and the model made predictions on each class. The average prediction for each class is recorded below. You can see how the model actually predicts higher values for the higher classes.
                 </p>
-                <!-- <img class="pudding-chart" src='../static/img/sigmoid_binary_300_prediction_trend.png' alt='Prediction Trend Graph'> -->
-                    
                 <svg id="svg-trend" width="200" height="400"></svg>
-                
                 <p class="pudding-paragraph">
-                    Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that, there is a definite trend! The next step is to determine what features make our model predict who's good and who's not.
+                    Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that, there is a definite trend! 
+                </p>
+                <center>
+                    <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form" role="form">
+                        <input type="file" name="file"><br /><br />
+                        <input id="submit-button" type="submit" value="Upload">
+                    </form>
+                    <div id="loadingDiv">
+                        <center><h2>Sit tight, we're predicting your success</h2></center>
+                        <center><img src="/static/gif/spinning-baseball.gif"></center>
+                    </div>
+                </center>
+                
+                <center><div class="js-gauge demo gauge" id="score-gauge"></div></center>
+
+                <p class="pudding-paragraph">
+                    But what about you? Do you think your beautiful face is cut out for the MLB? <a href='/predict' target="_blank"><strong>See for yourself!</strong></a>
                 </p>
                 <p class="pudding-paragraph">
-                    To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. Doing this, we can average the pictures of each class and note differences between them. The pictures represent the average of the faces for each class, 0 to 5, from left to right.
+                    The next step is to determine what features make our model predict who's good and who's not. To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. Doing this, we can average the pictures of each class and note differences between them. The pictures represent the average of the faces for each class, 0 to 5, from left to right.
                 </p>
                 <center>
                         <img class="eigen-pics" src='../static/img/average_0.png' alt='Average Face 0'>
@@ -156,9 +174,8 @@
                     It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to here what y'all think so leave a comment and let me know!
                 </p>
                 <hr>
-                <p class="pudding-paragraph">
-                    But what about you? Do you think your beautiful face is cut out for the MLB? <a href='/predict'><strong>See for yourself!</strong></a>
-                </p>
+                
+                
                 
             </div>
         </div>
@@ -168,7 +185,7 @@
 <script>
 
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 600 - margin.left - margin.right,
+    width = 700 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 var formatPercent = d3.format("");
@@ -192,7 +209,7 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
+    return "<strong>average:</strong> <span style='color:red'>" + d.average + "</span>";
   })
 
 var svg = d3.select("svg")
@@ -204,8 +221,8 @@ var svg = d3.select("svg")
 svg.call(tip);
 
 d3.csv("/endpoint", type, function(error, data) {
-  x.domain(data.map(function(d) { return d.letter; }));
-  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+  x.domain(data.map(function(d) { return d.class; }));
+  y.domain([0, d3.max(data, function(d) { return d.average; })]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -220,24 +237,60 @@ d3.csv("/endpoint", type, function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Frequency");
+      .text("Average");
 
   svg.selectAll(".bar")
       .data(data)
     .enter().append("rect")
       .attr("class", "bar")
-      .attr("x", function(d) { return x(d.letter); })
+      .attr("x", function(d) { return x(d.class); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.frequency); })
-      .attr("height", function(d) { return height - y(d.frequency); })
+      .attr("y", function(d) { return y(d.average); })
+      .attr("height", function(d) { return height - y(d.average); })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
 
 });
 
 function type(d) {
-  d.frequency = +d.frequency;
+  d.average = +d.average;
   return d;
 }
+
+var $loading = $('#loadingDiv').hide();
+
+$("#submit-button").click(function(){
+    $('#submit-form').hide();
+    $('#loadingDiv').show();
+    $.ajax({
+        url: "/score",
+        type: "POST",
+        data: new FormData($('form')[0]),
+        processData: false,
+        contentType: false,
+    }).done(function(){
+      console.log("Success: Files sent!");
+      $('#loadingDiv').hide();
+      $('.demo').kumaGauge({
+        value : {{ 50 }},
+        animationSpeed : 1000,
+        showNeedle : false,
+        // background : '#4EA9D7',
+        label : {
+            display: true,
+            left: '0',
+            right: '100',
+            fontColor : '#E31E81',
+            fontSize : 16,
+        }
+      });
+      alert({{ path_and_score('temp', 65) }});
+    }).fail(function(){
+      console.log("An error occurred, the files couldn't be sent!");
+    });
+});
+
+
+
 
 </script>
