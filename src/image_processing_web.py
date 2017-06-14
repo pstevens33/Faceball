@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 from PIL import Image
-from resizeimage import resizeimage
+# from resizeimage import resizeimage
+
 # from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing.image import array_to_img, img_to_array, load_img
 
