@@ -18,10 +18,9 @@ from project_faces_web import project_face
 from image_processing_web import process_image
 
 
-async_mode = None
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode=async_mode)
-thread = None
+
+
 
 # This is the path to the upload directory
 app.config['UPLOAD_FOLDER'] = 'uploads/'
