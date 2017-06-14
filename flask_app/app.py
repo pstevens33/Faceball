@@ -137,4 +137,4 @@ def read_json():
 
 if __name__ == '__main__':
     model = load_model('models/gpu_300_players_sigmoid_binary.h5')
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='ec2-52-91-17-204.compute-1.amazonaws.com', port=8105, debug=True)
