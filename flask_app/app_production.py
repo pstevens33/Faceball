@@ -33,7 +33,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 3
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_production.html')
 
 @app.route('/predict')
 def predict():
