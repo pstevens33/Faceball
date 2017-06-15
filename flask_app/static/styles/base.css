@@ -163,6 +163,19 @@ h1 {
 
 @media screen and (min-width: 0px) {
     #hidden-size {
+        width: 0;
+    }
+    
+    p {
+        font-size: 20px;
+    }
+    
+    
+    
+}
+
+@media screen and (min-width: 550px) {
+    #hidden-size {
         width: 200;
     }
     
@@ -176,7 +189,7 @@ h1 {
 
 @media screen and (min-width: 768px) {
     #hidden-size {
-        width: -100;
+        width: 200;
     }
     p {
         font-size: 20px;
@@ -194,6 +207,13 @@ h1 {
 @media screen and (min-width: 1100px) {
     #hidden-size {
         width: 300;
+    }
+    
+}
+
+@media screen and (min-width: 1200px) {
+    #hidden-size {
+        width: 350;
     }
     
 }
