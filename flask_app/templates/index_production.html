@@ -337,6 +337,11 @@ $("#reset-button").click(function(){
     upload_count++;
 });
 
+$("#scout-gif").click(function(){
+    this.remove();
+    $("#dismiss").hide();
+});
+
 $("#dismiss").click(function(){
     this.remove();
     $("#scout-gif").remove();
