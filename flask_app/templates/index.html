@@ -294,13 +294,12 @@ $("#submit-button").click(function(){
     $('#submit-form').hide();
     $('#loadingDiv').show();
     $.ajax({
-        url: "/score",
-        type: "POST",
-        data: new FormData($('form')[0]),
-        processData: false,
-        contentType: false,
+        // url: "/score",
+        // type: "POST",
+        // data: new FormData($('form')[0]),
+        // processData: false,
+        // contentType: false,
     }).done(function(){
-      alert('2nd POST CALL');
       console.log("Success: Files sent!");
       
     
