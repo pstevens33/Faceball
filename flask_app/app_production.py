@@ -46,52 +46,52 @@ def allowed_file(filename):
 @app.route('/score', methods=['POST'])
 def score():
     data = []
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            projected = project_face(file_path)
-            if projected == True:
-                data.append(file.filename)
-                prepared_image = process_image(file_path[8:])
-                prediction = model.predict(prepared_image)[0]
-                score = 0
-                for count, val in enumerate(prediction):
-                    if count == 0:
-                        score += val * 30
-                    elif count == 1:
-                        score += val * 70
-                    elif count == 2:
-                        score += val * 80
-                    elif count == 3:
-                        score += val * 90
-                    elif count == 4:
-                        score += val * 100
-                    elif count == 5:
-                        score += val * 200
-                        
-                # if score > 100:
-                #     score = 100
-                score = round(score,0)
-                print(prediction)
-                data.append(score)      
+    # if request.method == 'POST':
+    #     # check if the post request has the file part
+    #     if 'file' not in request.files:
+    #         flash('No file part')
+    #         return redirect(request.url)
+    #     file = request.files['file']
+    #     # if user does not select file, browser also
+    #     # submit a empty part without filename
+    #     if file.filename == '':
+    #         flash('No selected file')
+    #         return redirect(request.url)
+    #     if file and allowed_file(file.filename):
+    #         filename = secure_filename(file.filename)
+    #         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    #         file.save(file_path)
+    #         projected = project_face(file_path)
+    #         if projected == True:
+    #             data.append(file.filename)
+    #             prepared_image = process_image(file_path[8:])
+    #             prediction = model.predict(prepared_image)[0]
+    #             score = 0
+    #             for count, val in enumerate(prediction):
+    #                 if count == 0:
+    #                     score += val * 30
+    #                 elif count == 1:
+    #                     score += val * 70
+    #                 elif count == 2:
+    #                     score += val * 80
+    #                 elif count == 3:
+    #                     score += val * 90
+    #                 elif count == 4:
+    #                     score += val * 100
+    #                 elif count == 5:
+    #                     score += val * 200
+    #                     
+    #             # if score > 100:
+    #             #     score = 100
+    #             score = round(score,0)
+    #             print(prediction)
+    #             data.append(score)      
     
-    print(data)
-    global_model_data = {'path': data[0], 'score': data[1]}
-    with open('json_returns/model_return.json', 'w') as outfile:
-        json.dump(global_model_data, outfile)
-    return jsonify(data), 204
+    # print(data)
+    # global_model_data = {'path': data[0], 'score': data[1]}
+    # with open('json_returns/model_return.json', 'w') as outfile:
+    #     json.dump(global_model_data, outfile)
+    return "", 204
 
 @app.route('/get_model_data')
 def get_model_data():
