@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 import dlib
 import cv2
-import openface
+import openface.openface as openface
 
 def project_face(path):
 
