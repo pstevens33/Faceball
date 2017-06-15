@@ -199,7 +199,7 @@
                 </p>
                 <hr>
                 <div id="log"></div>
-                
+                <div id="hidden-size"></div>
                 
                 
             </div>
@@ -214,8 +214,8 @@ $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 
 
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 700 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = screen.width/3.5 + $('#hidden-size').width() - margin.left - margin.right,
+    height = screen.height/3.5 - margin.bottom;
 
 var formatPercent = d3.format("");
 

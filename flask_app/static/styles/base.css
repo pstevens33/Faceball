@@ -136,8 +136,9 @@ h1 {
 }
 
 #svg-trend {
-    width: 900px;
+    width: 90vw;
     margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 #scout-gif {
@@ -157,6 +158,27 @@ h1 {
 @media screen and (max-width: 700px) {
     p {
         font-size: 20px;
+    }
+    
+}
+
+@media screen and (min-width: 0px) {
+    #hidden-size {
+        width: 0;
+    }
+    
+}
+
+@media screen and (min-width: 768px) {
+    #hidden-size {
+        width: -100;
+    }
+    
+}
+
+@media screen and (min-width: 986px) {
+    #hidden-size {
+        width: 200;
     }
     
 }

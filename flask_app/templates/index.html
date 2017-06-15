@@ -198,7 +198,7 @@
                     It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to here what y'all think so leave a comment and let me know!
                 </p>
                 <hr>
-                <div id="log"></div>
+                <div id="hidden-size"></div>
                 
                 
                 
@@ -211,11 +211,12 @@
 var upload_count = 0;
 
 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+alert($(window).width());
 
 
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 700 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = screen.width/3.5 + $('#hidden-size').width() - margin.left - margin.right,
+    height = screen.height/3.5 - margin.bottom;
 
 var formatPercent = d3.format("");
 
