@@ -83,7 +83,7 @@ h1 {
 }
 
 .pudding-content {
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .pudding-paragraph {
@@ -155,10 +155,12 @@ h1 {
 }
 
 @media screen and (max-width: 700px) {
-    body {
-        background-color: lightblue;
-        font-size: 30px !important;
+    p {
+        font-size: 20px;
     }
+    
 }
+
+
 
 
