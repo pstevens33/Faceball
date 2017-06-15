@@ -293,27 +293,34 @@ $("#submit-button").click(function(){
     $("#spinning-ball").attr('src', "/static/gif/spinning-baseball.gif?"+ Math.random());
     $('#submit-form').hide();
     $('#loadingDiv').show();
-    
+    $.ajax({
+        // url: "/score",
+        // type: "POST",
+        // data: new FormData($('form')[0]),
+        // processData: false,
+        // contentType: false,
+    }).done(function(){
+      console.log("Success: Files sent!");
       
     
-    $.getJSON('/read_json', function(json) {
-        $('#loadingDiv').hide();
-        $("#projected-image").attr("src","../projected_faces_web/" + json['path']);
-        $('.demo#score-gauge-'+upload_count).kumaGauge({
-          value : json['score'],
-          animationSpeed : 1000,
-          showNeedle : false,
-          // background : '#4EA9D7',
-          label : {
-              display: true,
-              left: '0',
-              right: '100',
-              fontColor : '#E31E81',
-              fontSize : 16,
-          }
+        $.getJSON('/read_json', function(json) {
+            $('#loadingDiv').hide();
+            $("#projected-image").attr("src","../projected_faces_web/" + json['path']);
+            $('.demo#score-gauge-'+upload_count).kumaGauge({
+              value : json['score'],
+              animationSpeed : 1000,
+              showNeedle : false,
+              // background : '#4EA9D7',
+              label : {
+                  display: true,
+                  left: '0',
+                  right: '100',
+                  fontColor : '#E31E81',
+                  fontSize : 16,
+              }
+            });
+            $("#hidden-pic").show();
         });
-        $("#hidden-pic").show();
-    });
     }).fail(function(){
       console.log("An error occurred, the files couldn't be sent!");
     });
