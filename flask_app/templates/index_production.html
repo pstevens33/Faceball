@@ -294,13 +294,8 @@ $("#submit-button").click(function(){
     $('#submit-form').hide();
     $('#loadingDiv').show();
     $.ajax({
-        url: "http://ec2-52-91-17-204.compute-1.amazonaws.com:8105/score",
-        type: "POST",
-        data: new FormData($('form')[0]),
-        processData: false,
-        contentType: false,
+        
     }).done(function(){
-      alert('2nd POST CALL');
       console.log("Success: Files sent!");
       
     
