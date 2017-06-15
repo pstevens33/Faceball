@@ -174,7 +174,7 @@
                     
                     <div id="hidden-pic">
                         <p>Based on your projected face.</p>
-                        <img id="projected-image" src='../projected_faces_web/dizzy.jpg' alt="Projected Image">
+                        <img id="projected-image" src='/static/img/white_square.png' alt="Projected Image">
                         <br>
                         <br>
                         <input id="reset-button" type="submit" value="Try Again">
@@ -294,11 +294,10 @@ $("#submit-button").click(function(){
     $('#submit-form').hide();
     $('#loadingDiv').show();
     $.ajax({
-        // url: "/score",
-        // type: "POST",
-        // data: new FormData($('form')[0]),
-        // processData: false,
-        // contentType: false,
+        url: "/wait",
+        type: "POST",
+        processData: false,
+        contentType: false,
     }).done(function(){
       console.log("Success: Files sent!");
       
@@ -331,6 +330,7 @@ $("#reset-button").click(function(){
     // $('.demo').replace();
     $("#hidden-pic").hide();
     $('#submit-form').show();
+    $("#projected-image").attr('src', "/static/img/white_square.png")
     upload_count++;
 });
 

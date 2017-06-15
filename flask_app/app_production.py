@@ -132,6 +132,10 @@ def read_json():
         data = json.load(data_file)
     return jsonify(data)
 
+@app.route('/wait', methods=["POST"])
+def wait():
+    time.sleep(3)
+    return "", 204
 
 
 if __name__ == '__main__':
