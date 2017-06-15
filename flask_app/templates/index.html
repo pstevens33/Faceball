@@ -293,14 +293,7 @@ $("#submit-button").click(function(){
     $("#spinning-ball").attr('src', "/static/gif/spinning-baseball.gif?"+ Math.random());
     $('#submit-form').hide();
     $('#loadingDiv').show();
-    $.ajax({
-        // url: "/score",
-        // type: "POST",
-        // data: new FormData($('form')[0]),
-        // processData: false,
-        // contentType: false,
-    }).done(function(){
-      console.log("Success: Files sent!");
+    
       
     
     $.getJSON('/read_json', function(json) {
