@@ -14,7 +14,7 @@ from keras.models import load_model
 
 import sys
 sys.path.insert(0, '../src')
-from project_faces_web import project_face
+from project_faces_production import project_face
 from image_processing_web import process_image
 
 
