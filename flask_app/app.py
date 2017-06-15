@@ -68,23 +68,23 @@ def score():
                 data.append(file.filename)
                 prepared_image = process_image(file_path[8:])
                 prediction = model.predict(prepared_image)[0]
-                score = 0
+                score = 30
                 for count, val in enumerate(prediction):
                     if count == 0:
-                        score += val * 30
+                        score -= val * 0
                     elif count == 1:
-                        score += val * 70
+                        score += val * 50
                     elif count == 2:
-                        score += val * 80
+                        score += val * 70
                     elif count == 3:
-                        score += val * 90
-                    elif count == 4:
                         score += val * 100
-                    elif count == 5:
+                    elif count == 4:
                         score += val * 200
-                        
-                # if score > 100:
-                #     score = 100
+                    elif count == 5:
+                        score += val * 400
+                print(score)        
+                if score > 100:
+                    score = 100
                 score = round(score,0)
                 print(prediction)
                 data.append(score)      

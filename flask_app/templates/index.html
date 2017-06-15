@@ -119,6 +119,7 @@
                 <div id="scout-gif">
                     <center><img src="/static/gif/scout.gif" style="width: 90%;"></center>
                 </div>
+                <center><p id="dismiss">Click to dismiss</p></center>
                 <p class="pudding-paragraph">
                     Before you discredit these scouts as "behind the times", let's give it a little thought and exploration. After all, some generalizations have roots that actually bear some fact. 
                 </p>
@@ -138,13 +139,14 @@
                     THE SCOUTS WERE RIGHT...kind of.
                 </p>
                 <p class="pudding-paragraph">
-                    The images were split into their respective classes and the model made its predictions. The average prediction for each class is recorded below. You can see how the model actually predicts higher values for the higher classes.
+                    The images were split up into folders dedicated to their respective classes, i.e. the pictures of players with a WAR of 0 went into a certain folder, WARs of 1's went in another, and so on. The model then made its predictions on each folder. The hope was that it would predict 0's for every picture in the "0 folder" up to 5's for every picture in the "5 folder." The average prediction for each class is recorded below. You can see how the model actually predicts higher values for the higher classes.
                 </p>
                 <center><svg id="svg-trend" style="width: 100%"></svg></center>
                 <p class="pudding-paragraph">
                     Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that, there is a definite trend! 
                 </p>
-                <p class="pudding-paragraph">
+                <hr>
+                <p class="pudding-paragraph large-text">
                     But what about you? Do you think your beautiful face is cut out for the MLB? Upload a picture to see what the model thinks!
                 </p>
                 <center>
@@ -181,9 +183,9 @@
                     </div>
                 </center>
 
-                
+                <hr>
                 <p class="pudding-paragraph">
-                    The next step is to determine what features make our model predict who's good and who's not. To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. By doing this, we can average the pictures of each class and note differences between them. The pictures represent the average of the faces for each class, 0 to 5, from left to right.
+                    The next step is to determine what features make our model predict who's good and who's not. To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. By doing this, we can average the pictures of each class and note differences between them. The pictures below are the actual average faces calculated from all of the pictures in each class, 0 to 5, from left to right.
                 </p>
                 <center>
                         <img class="eigen-pics" src='../static/img/average_0.png' alt='Average Face 0'>
@@ -194,6 +196,9 @@
                         <img class="eigen-pics" src='../static/img/average_5.png' alt='Average Face 5'>
                 </center>
                 <br>
+                <p class="pudding-paragraph">
+                    Amazingly enough, since these pictures were an accumulation of pictures that the model trained on, you can plug these pictures into the prediction model and see that they predict in ascending order! Even though the faces look very similar, the model can detect the small differences and make accurate predictions.
+                </p>
                 <p class="pudding-paragraph">
                     It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to hear what y'all think so leave a comment and let me know!
                 </p>
@@ -211,12 +216,11 @@
 var upload_count = 0;
 
 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-alert($(window).width());
 
 
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
     width = screen.width/3.5 + $('#hidden-size').width() - margin.left - margin.right,
-    height = screen.height/3.5 - margin.bottom;
+    height = screen.height/2 - margin.bottom;
 
 var formatPercent = d3.format("");
 
@@ -333,6 +337,16 @@ $("#reset-button").click(function(){
     $('#submit-form').show();
     $("#projected-image").attr('src', "/static/img/white_square.png")
     upload_count++;
+});
+
+$("#scout-gif").click(function(){
+    this.remove();
+    $("#dismiss").hide();
+});
+
+$("#dismiss").click(function(){
+    this.remove();
+    $("#scout-gif").remove();
 });
 
 
