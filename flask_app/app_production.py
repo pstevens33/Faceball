@@ -25,7 +25,7 @@ app = Flask(__name__)
 # This is the path to the upload directory
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 # These are the extension that we are accepting to be uploaded
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'PNG', 'JPG'])
 app.config['MAX_CONTENT_PATH'] = 4000000
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 3
