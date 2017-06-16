@@ -135,6 +135,14 @@ def read_json():
 def wait():
     time.sleep(3)
     return "", 204
+    
+@app.route('/basics', methods=["GET"])
+def basics():
+    return render_template('basics.html')
+    
+@app.route('/technical', methods=["GET"])
+def technical():
+    return render_template('technical.html')
 
 
 if __name__ == '__main__':
