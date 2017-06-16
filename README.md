@@ -21,6 +21,8 @@ These images were fed through a facial detection process in order to crop and al
     <img src="misc_images/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image" style="display: inline-block;">
 </center>
 
+<center>test</center>
+
 
 ### Neural Net
 I implemented a fairly standard convolutional neural network. Will go into detail later...
