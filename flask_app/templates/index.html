@@ -76,8 +76,7 @@ $( function() {
         stop: function(){
             if($("#drag-ball").position().left >= $("#bat").position().left) {
                 $.ajax({
-                    url: "/technical",
-                    type: "GET",
+                    
                 }).done(function (res) {
                     window.location.href = "/technical"
                 }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -85,8 +84,7 @@ $( function() {
                 });
             }else if($("#drag-ball").position().left <= ($("#glove").position().left + 50)) {
                 $.ajax({
-                    url: "/basics",
-                    type: "GET",
+                    
                 }).done(function (res) {
                     window.location.href = "/basics"
                 }).fail(function (jqXHR, textStatus, errorThrown) {
