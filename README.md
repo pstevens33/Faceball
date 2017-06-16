@@ -29,7 +29,7 @@ I implemented a fairly standard convolutional neural network. Will go into detai
 The classes were very imbalanced. About 68% of the data were 0's, 20% 1's, and decreasing as you go to 5. This imbalance coupled with the fact that facial features are only a very slight predictor of success, means that the accuracy of any model created will only decrease as the model starts to predict values other than 0. The goal of this model is to minimize the loss (reduce the prediction error). Any increase in accuracy is just a bonus.
 
 
-    <img src="misc_images/loss_300_binary_sigmoid_adam_0.35.png" alt="Loss Graph")
+<img src="misc_images/loss_300_binary_sigmoid_adam_0.35.png" alt="Loss Graph">
 
     
 You can see how the training loss continues to decrease as the model learns. The test loss decreases significantly up until 60 epochs and then begins to rise a bit, probably due to over fitting.
