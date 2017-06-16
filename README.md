@@ -39,7 +39,7 @@ You can see how the training loss continues to decrease as the model learns. The
 The main takeaway from this project can be shown in the following graph:
 
 
-<img src="misc_images/sigmoid_binary_300_prediction_trend.png" alt="Prediction Trend Graph")
+<img src="misc_images/sigmoid_binary_300_prediction_trend.png" alt="Prediction Trend Graph">
 
 
 The images in the test set were divided up into their classes and the average model predictions were recorded. It is clear that the model's predictions on unseen data show a positive trend in facial features and success.
