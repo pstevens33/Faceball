@@ -73,7 +73,7 @@
 $( function() {
     $('#drag-ball').draggable(
     {
-        drag: function(){
+        stop: function(){
             if($("#drag-ball").position().left >= $("#bat").position().left) {
                 $.ajax({
                     url: "/technical",
