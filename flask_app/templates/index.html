@@ -107,9 +107,11 @@
             Predicting Success in the MLB based on Facial Features
         </div>
         <img id="glove" src="/static/img/glove.png">
+        <p id="left-text">Drag ball to glove for the Basics</p>
+        <p id="right-text">Drag ball to bat for the Technical</p>
         <img id="bat" src="/static/img/bat.png">
         <img id="drag-ball" class="ui-widget-content"src="/static/img/baseball.png">
-        <div class="pudding-author">
+        <div class="pudding-author" style="margin-left: 50px;">
             by <strong>Parker Stevens</strong>
         </div>
     </center>
@@ -300,6 +302,7 @@ function type(d) {
 
 $('#loadingDiv').hide();
 $('#hidden-pic').hide();
+
 
 $("#submit-button").click(function(){
     $("#spinning-ball").attr('src', "/static/gif/spinning-baseball.gif?"+ Math.random());

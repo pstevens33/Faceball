@@ -80,14 +80,32 @@ h1 {
 
 #glove {
     float: left;
-    margin-left: 100px;
+    margin-left: 50px;
     margin-top: -50px;
     width: 20%;
 }
 
+#left-text {
+    float: left;
+    margin-top: 30px;
+    color: red;
+    margin-right: -200px;
+}
+
 #drag-ball {
+    float: center;
     width: 10%;
-    margin-left: 85px;
+    margin-left: 40px;
+    margin-top: -75px;
+    z-index: 10;
+}
+
+#right-text {
+    float: left;
+    margin-top: 30px;
+    color: red;
+    margin-left: 400px;
+    margin-right: 50px;
 }
 
 #bat {
@@ -96,7 +114,8 @@ h1 {
     -webkit-transform: rotate(300deg); /* Chrome, Safari, Opera */
     transform: rotate(300deg);
     float: right;
-    margin-right: 70px;
+    margin-right: 20px;
+    margin-top: -60px;
 }
 
 .pudding-author {
