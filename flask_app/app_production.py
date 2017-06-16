@@ -139,4 +139,4 @@ def wait():
 
 if __name__ == '__main__':
     model = load_model('models/gpu_300_players_sigmoid_binary.h5')
-    app.run(host='34.226.24.213', port=8105, debug=True)
+    app.run(host='ec2-34-226-24-213.compute-1.amazonaws.com', port=8105, debug=True)
