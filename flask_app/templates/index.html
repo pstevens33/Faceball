@@ -46,56 +46,6 @@
   <!-- ************************************   D3   **************************************** -->
 
   <title>Faceball</title>
-  <style>
-
-  .axis path,
-  .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
-
-  .bar {
-    fill: orange;
-  }
-
-  .bar:hover {
-    fill: orangered ;
-  }
-
-  .x.axis path {
-    display: none;
-  }
-
-  .d3-tip {
-    line-height: 1;
-    font-weight: bold;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    border-radius: 2px;
-  }
-
-  /* Creates a small triangle extender for the tooltip */
-  .d3-tip:after {
-    box-sizing: border-box;
-    display: inline;
-    font-size: 10px;
-    width: 100%;
-    line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
-    content: "\25BC";
-    position: absolute;
-    text-align: center;
-  }
-
-  /* Style northward tooltips differently */
-  .d3-tip.n:after {
-    margin: -1px 0 0 0;
-    top: 100%;
-    left: 0;
-  }
-  </style>
 </head>
 <br>
 <div class="black-top">
@@ -107,285 +57,49 @@
             Predicting Success in the MLB based on Facial Features
         </div>
         <img id="glove" src="/static/img/glove.png">
-        <p id="left-text">Drag ball to glove for the Basics</p>
-        <p id="right-text">Drag ball to bat for the Technical</p>
         <img id="bat" src="/static/img/bat.png">
         <img id="drag-ball" class="ui-widget-content"src="/static/img/baseball.png">
-        <div class="pudding-author" style="margin-left: 50px;">
+        <p id="drag-instructions">Drag ball to the glove for the Basics | Drag the ball to the bat for Technical</p>
+        <div class="pudding-author">
             by <strong>Parker Stevens</strong>
         </div>
     </center>
 </div>
-<div class="container">
-        <br>
-        <br>
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
-            <div class="pudding-content">
-                <p class="pudding-paragraph">
-                    What makes a good baseball player? Some will tell you that it's his speed. His athleticism. His eye for the baseball. Most coaches will tell you that it's his size and frame. No doubt, these factors all play a part in the recipe for a good baseball player. But if you listen to the old scouts, the ones that have been doing it the longest, since before moneyball and statistics determined a player's value, you'll hear them tell you what they think of the player's face. Very scientific stuff. 
-                </p>
-                <div id="scout-gif">
-                    <center><img src="/static/gif/scout.gif" style="width: 90%;"></center>
-                </div>
-                <center><p id="dismiss">Click to dismiss</p></center>
-                <p class="pudding-paragraph">
-                    Before you discredit these scouts as "behind the times", let's give it a little thought and exploration. After all, some generalizations have roots that actually bear some fact. 
-                </p>
-                <p class="pudding-paragraph">
-                    Since the inception of Major League Baseball in 1871, there have been 19,022 people to play the game. Of that, 13,434 were born in the United States of America and have an obtainable picture of their face. It is important to take only American born players as we are analyzing for facial generalizations and not racially or culturally differentiating characteristics.
-                </p>
-                <p class="pudding-paragraph">
-                    All of the images of the MLB players were obtained along with their total WAR stats. WAR stands for "Wins Above Replacement." This is the total number of wins a player produced in his career over what the average player could. Higher WAR = Better Player. Each WAR stat was divided by the number of seasons played to get the average WAR over a career. A WAR of 0 means a player is average, a WAR of 5 means he is a perennial All-Star.
-                </p>
-                <p class="pudding-paragraph">
-                    All of this data was fed into a <strong>convolutional neural network</strong> which is basically just a machine learning program that scans pictures piece by piece until it understands the data. When it has learned all of the data, it can make predictions on new data fed to it. Cool, right?
-                </p>
-                <p class="pudding-paragraph">
-                    So what does this neural network tell us?
-                </p>
-                <p class="pudding-paragraph large-text">
-                    THE SCOUTS WERE RIGHT...kind of.
-                </p>
-                <p class="pudding-paragraph">
-                    The images were split up into folders dedicated to their respective classes, i.e. the pictures of players with a WAR of 0 went into a certain folder, WARs of 1's went in another, and so on. The model then made its predictions on each folder. The hope was that it would predict 0's for every picture in the "0 folder" up to 5's for every picture in the "5 folder." The average prediction for each class is recorded below. You can see how the model actually predicts higher values for the higher classes.
-                </p>
-                <center><svg id="svg-trend" style="width: 100%"></svg></center>
-                <p class="pudding-paragraph">
-                    Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that, there is a definite trend! 
-                </p>
-                <hr>
-                <p class="pudding-paragraph large-text">
-                    But what about you? Do you think your beautiful face is cut out for the MLB? Upload a picture to see what the model thinks!
-                </p>
-                <center>
-                    <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form" role="form">
-                        <input type="file" name="file"><br /><br />
-                        <input id="submit-button" type="submit" value="Upload">
-                    </form>
-                    <div id="loadingDiv">
-                        <center><h2>Sit tight, we're predicting your success</h2></center>
-                        <center><img id="spinning-ball" src="/static/gif/spinning-baseball.gif"></center>
-                    </div>
-                </center>
-                
-                <center>
-                    <div class="js-gauge demo gauge" id="score-gauge-0"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-1"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-2"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-3"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-4"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-5"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-6"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-7"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-8"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-9"></div>
-                    <div class="js-gauge demo gauge" id="score-gauge-10"></div>
-                    
-                    
-                    <div id="hidden-pic">
-                        <p>Based on your projected face.</p>
-                        <img id="projected-image" src='/static/img/white_square.png' alt="Projected Image">
-                        <br>
-                        <br>
-                        <input id="reset-button" type="submit" value="Try Again">
-                    </div>
-                </center>
 
-                <hr>
-                <p class="pudding-paragraph">
-                    The next step is to determine what features make our model predict who's good and who's not. To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. By doing this, we can average the pictures of each class and note differences between them. The pictures below are the actual average faces calculated from all of the pictures in each class, 0 to 5, from left to right.
-                </p>
-                <center>
-                        <img class="eigen-pics" src='../static/img/average_0.png' alt='Average Face 0'>
-                        <img class="eigen-pics" src='../static/img/average_1.png' alt='Average Face 1'>
-                        <img class="eigen-pics" src='../static/img/average_2.png' alt='Average Face 2'>
-                        <img class="eigen-pics" src='../static/img/average_3.png' alt='Average Face 3'>
-                        <img class="eigen-pics" src='../static/img/average_4.png' alt='Average Face 4'>
-                        <img class="eigen-pics" src='../static/img/average_5.png' alt='Average Face 5'>
-                </center>
-                <br>
-                <p class="pudding-paragraph">
-                    Amazingly enough, since these pictures were an accumulation of pictures that the model trained on, you can plug these pictures into the prediction model and see that they predict in ascending order! Even though the faces look very similar, the model can detect the small differences and make accurate predictions.
-                </p>
-                <p class="pudding-paragraph">
-                    It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to hear what y'all think so leave a comment and let me know!
-                </p>
-                <hr>
-                <div id="hidden-size"></div>
-                
-                
-                
-            </div>
-        </div>
-        <div class="col-sm-2"></div>
-</div>
 
 <script>
-var upload_count = 0;
 
-$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
-
-var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = screen.width/3.5 + $('#hidden-size').width() - margin.left - margin.right,
-    height = screen.height/2 - margin.bottom;
-
-var formatPercent = d3.format("");
-
-var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
-
-var y = d3.scale.linear()
-    .range([height, 0]);
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .tickFormat(formatPercent);
-
-var tip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>average:</strong> <span style='color:red'>" + d.average + "</span>";
-  })
-
-var svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-svg.call(tip);
-
-d3.csv("/endpoint", type, function(error, data) {
-  x.domain(data.map(function(d) { return d.class; }));
-  y.domain([0, d3.max(data, function(d) { return d.average; })]);
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Average");
-
-  svg.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d.class); })
-      .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.average); })
-      .attr("height", function(d) { return height - y(d.average); })
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)
-
-});
-
-function type(d) {
-  d.average = +d.average;
-  return d;
-}
-
-$('#loadingDiv').hide();
-$('#hidden-pic').hide();
-
-
-$("#submit-button").click(function(){
-    $("#spinning-ball").attr('src', "/static/gif/spinning-baseball.gif?"+ Math.random());
-    $('#submit-form').hide();
-    $('#loadingDiv').show();
-    $.ajax({
-        url: "/wait",
-        type: "POST",
-        processData: false,
-        contentType: false,
-    }).done(function(){
-      console.log("Success: Files sent!");
-      
-    
-        $.getJSON('/read_json', function(json) {
-            $('#loadingDiv').hide();
-            $("#projected-image").attr("src","../projected_faces_web/" + json['path']);
-            $('.demo#score-gauge-'+upload_count).kumaGauge({
-              value : json['score'],
-              animationSpeed : 1000,
-              showNeedle : false,
-              // background : '#4EA9D7',
-              label : {
-                  display: true,
-                  left: '0',
-                  right: '100',
-                  fontColor : '#E31E81',
-                  fontSize : 16,
-              }
-            });
-            $("#hidden-pic").show();
-        });
-    }).fail(function(){
-      console.log("An error occurred, the files couldn't be sent!");
-    });
-});
-
-$("#reset-button").click(function(){
-    $("#gauge-0").remove();
-    // $('.demo').replace();
-    $("#hidden-pic").hide();
-    $('#submit-form').show();
-    $("#projected-image").attr('src', "/static/img/white_square.png")
-    upload_count++;
-});
-
-$("#scout-gif").click(function(){
-    this.remove();
-    $("#dismiss").hide();
-});
-
-$("#dismiss").click(function(){
-    this.remove();
-    $("#scout-gif").remove();
-});
 
 $( function() {
     $('#drag-ball').draggable(
     {
         drag: function(){
-            $.ajax({
-                url: "/link",
-                type: "GET",
-                processData: false,
-                contentType: false,
-                success: function(data, textStatus) {
-                    if (data.redirect) {
-                        // data.redirect contains the string URL to redirect to
-                        window.location.href = data.redirect;
-                    }
-                    else {
-                        // data.form contains the HTML for the replacement form
-                        $("#myform").replaceWith(data.form);
-                    }
-                }
-            });
+            if($("#drag-ball").position().left >= $("#bat").position().left) {
+                $.ajax({
+                    url: "/technical",
+                    type: "GET",
+                }).done(function (res) {
+                    window.location.href = "/technical"
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
+                });
+            }else if($("#drag-ball").position().left <= ($("#glove").position().left + 50)) {
+                $.ajax({
+                    url: "/basics",
+                    type: "GET",
+                }).done(function (res) {
+                    window.location.href = "/basics"
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
+                });
+            };
+            
+            
         }
     });
 });
 
-if($("#drag-ball").position().left >= $("#bat").position().left) {
-    
-};
+
 
 
 </script>

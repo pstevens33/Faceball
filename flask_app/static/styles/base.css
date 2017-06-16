@@ -68,7 +68,7 @@ h1 {
 }
 
 .pudding-title {
-    margin-top: -20px;
+    margin-top: -10vh;
     font-size: 80px;
 }
 
@@ -80,48 +80,33 @@ h1 {
 
 #glove {
     float: left;
-    margin-left: 50px;
-    margin-top: -50px;
+    margin-top: -5vh;
     width: 20%;
-}
-
-#left-text {
-    float: left;
-    margin-top: 30px;
-    color: red;
-    margin-right: -200px;
+    width: 30vmin;
 }
 
 #drag-ball {
     float: center;
-    width: 10%;
-    margin-left: 40px;
-    margin-top: -75px;
+    width: 20vmin;
     z-index: 10;
 }
 
-#right-text {
-    float: left;
-    margin-top: 30px;
-    color: red;
-    margin-left: 400px;
-    margin-right: 50px;
-}
-
 #bat {
-    width: 25%;
+    width: 30vmin;
     -ms-transform: rotate(300deg); /* IE 9 */
     -webkit-transform: rotate(300deg); /* Chrome, Safari, Opera */
     transform: rotate(300deg);
     float: right;
-    margin-right: 20px;
-    margin-top: -60px;
+}
+
+#drag-instructions {
+    margin-top: 10vh;
+    color: red;
 }
 
 .pudding-author {
     font-size: 16px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 5vh;
 }
 
 .pudding-content {
@@ -220,6 +205,16 @@ h1 {
         font-size: 20px;
     }
     
+    .pudding-title {
+        font-size: 80px;
+    }
+    .pudding-subtitle {
+        font-size: 20px;
+    }
+    #drag-instructions {
+        font-size: 15px;
+    }
+    
     
     
 }
@@ -233,7 +228,16 @@ h1 {
         font-size: 20px;
     }
     
+    .pudding-title {
+        font-size: 130px;
+    }
+    .pudding-subtitle {
+        font-size: 30px;
+    }
     
+    #drag-instructions {
+        font-size: 20px;
+    }
     
 }
 

@@ -45,7 +45,7 @@
   
   <!-- ************************************   D3   **************************************** -->
 
-  <title>Faceball</title>
+  <title>Technical</title>
   <style>
 
   .axis path,
@@ -98,23 +98,8 @@
   </style>
 </head>
 <br>
-<div class="black-top">
-    <center>
-        <div class="pudding-title">
-            Faceball
-        </div>
-        <div class="pudding-subtitle">
-            Predicting Success in the MLB based on Facial Features
-        </div>
-        <img id="glove" src="/static/img/glove.png">
-        <img id="bat" src="/static/img/bat.png">
-        <img id="drag-ball" class="ui-widget-content"src="/static/img/baseball.png">
-        <p id="drag-instructions">Drag ball to the glove for the Basics | Drag the ball to the bat for Technical</p>
-        <div class="pudding-author">
-            by <strong>Parker Stevens</strong>
-        </div>
-    </center>
-</div>
+
+<center><h1>Technical</h1></center>
 <div class="container">
         <br>
         <br>
@@ -153,7 +138,6 @@
                 <p class="pudding-paragraph">
                     Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that, there is a definite trend! 
                 </p>
-                <hr>
                 <p class="pudding-paragraph large-text">
                     But what about you? Do you think your beautiful face is cut out for the MLB? Upload a picture to see what the model thinks!
                 </p>
@@ -191,7 +175,7 @@
                     </div>
                 </center>
 
-                <hr>
+                
                 <p class="pudding-paragraph">
                     The next step is to determine what features make our model predict who's good and who's not. To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. By doing this, we can average the pictures of each class and note differences between them. The pictures below are the actual average faces calculated from all of the pictures in each class, 0 to 5, from left to right.
                 </p>
@@ -211,8 +195,8 @@
                     It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to hear what y'all think so leave a comment and let me know!
                 </p>
                 <hr>
+                <div id="log"></div>
                 <div id="hidden-size"></div>
-                
                 
                 
             </div>
@@ -302,7 +286,6 @@ function type(d) {
 $('#loadingDiv').hide();
 $('#hidden-pic').hide();
 
-
 $("#submit-button").click(function(){
     $("#spinning-ball").attr('src', "/static/gif/spinning-baseball.gif?"+ Math.random());
     $('#submit-form').hide();
@@ -314,8 +297,7 @@ $("#submit-button").click(function(){
         contentType: false,
     }).done(function(){
       console.log("Success: Files sent!");
-      
-    
+
         $.getJSON('/read_json', function(json) {
             $('#loadingDiv').hide();
             $("#projected-image").attr("src","../projected_faces_web/" + json['path']);
@@ -332,7 +314,7 @@ $("#submit-button").click(function(){
                   fontSize : 16,
               }
             });
-            $("#hidden-pic").show();
+        $("#hidden-pic").show();
         });
     }).fail(function(){
       console.log("An error occurred, the files couldn't be sent!");

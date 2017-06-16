@@ -139,9 +139,13 @@ def wait():
     time.sleep(3)
     return "", 204
     
-@app.route('/link', methods=["POST"])
-def link():
-    return render_template('link.html')
+@app.route('/basics', methods=["GET"])
+def basics():
+    return render_template('basics.html')
+    
+@app.route('/technical', methods=["GET"])
+def technical():
+    return render_template('technical.html')
 
 
 
