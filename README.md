@@ -17,7 +17,7 @@ These images were fed through a facial detection process in order to crop and al
 
 <div style="text-align: center">
     <img src="misc_images/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg" alt="Raw Image" style="display: inline-block;">
-    <img src="misc_images/arrow.png" alt="Arrow Image" style="width: 100px; height: 100px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+    <img src="misc_images/arrow.png" alt="Arrow Image" style="width: 50px; height: 50px; margin-left: 20px; margin-right: 20px; display: inline-block;">
     <img src="misc_images/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image" style="display: inline-block;">
 </div>
 
