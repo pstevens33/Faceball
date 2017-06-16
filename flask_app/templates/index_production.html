@@ -106,7 +106,9 @@
         <div class="pudding-subtitle">
             Predicting Success in the MLB based on Facial Features
         </div>
-        <div class="drag-me"></div>
+        <img id="glove" src="/static/img/glove.png">
+        <img id="bat" src="/static/img/bat.png">
+        <img id="drag-ball" class="ui-widget-content"src="/static/img/baseball.png">
         <div class="pudding-author">
             by <strong>Parker Stevens</strong>
         </div>
@@ -351,6 +353,34 @@ $("#dismiss").click(function(){
     this.remove();
     $("#scout-gif").remove();
 });
+
+$( function() {
+    $('#drag-ball').draggable(
+    {
+        drag: function(){
+            $.ajax({
+                url: "/link",
+                type: "GET",
+                processData: false,
+                contentType: false,
+                success: function(data, textStatus) {
+                    if (data.redirect) {
+                        // data.redirect contains the string URL to redirect to
+                        window.location.href = data.redirect;
+                    }
+                    else {
+                        // data.form contains the HTML for the replacement form
+                        $("#myform").replaceWith(data.form);
+                    }
+                }
+            });
+        }
+    });
+});
+
+if($("#drag-ball").position().left >= $("#bat").position().left) {
+    
+};
 
 
 </script>
