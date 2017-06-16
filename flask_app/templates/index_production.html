@@ -69,26 +69,32 @@
 
 <script>
 
+
 $( function() {
     $('#drag-ball').draggable(
     {
         drag: function(){
-            $.ajax({
-                url: "/link",
-                type: "GET",
-                processData: false,
-                contentType: false,
-                success: function(data, textStatus) {
-                    if (data.redirect) {
-                        // data.redirect contains the string URL to redirect to
-                        window.location.href = data.redirect;
-                    }
-                    else {
-                        // data.form contains the HTML for the replacement form
-                        $("#myform").replaceWith(data.form);
-                    }
-                }
-            });
+            if($("#drag-ball").position().left >= $("#bat").position().left) {
+                $.ajax({
+                    url: "/technical",
+                    type: "GET",
+                }).done(function (res) {
+                    window.location.href = "/technical"
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
+                });
+            }else if($("#drag-ball").position().left <= ($("#glove").position().left + 50)) {
+                $.ajax({
+                    url: "/basics",
+                    type: "GET",
+                }).done(function (res) {
+                    window.location.href = "/basics"
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
+                });
+            };
+            
+            
         }
     });
 });
