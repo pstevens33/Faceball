@@ -15,10 +15,11 @@ All of the images of the MLB players were scraped along with their total WAR sta
 
 These images were fed through a facial detection process in order to crop and align each face to the center of a 128x128, greyscale image. Lastly, these projected face images were converted to numpy arrays, ready to be fed into the neural net. Below is an example of the raw image and the projected image.
 
-
-<img src="misc_images/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg" alt="Raw Image" style="display: inline-block;">
-<img src="misc_images/arrow.png" alt="Arrow Image" style="width: 100px; height: 100px; margin-left: 20px; margin-right: 20px; display: inline-block;">
-<img src="misc_images/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image" style="display: inline-block;">
+<center>
+    <img src="misc_images/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg" alt="Raw Image" style="display: inline-block;">
+    <img src="misc_images/arrow.png" alt="Arrow Image" style="width: 100px; height: 100px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+    <img src="misc_images/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image" style="display: inline-block;">
+</center>
 
 
 ### Neural Net
