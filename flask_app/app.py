@@ -138,6 +138,10 @@ def read_json():
 def wait():
     time.sleep(3)
     return "", 204
+    
+@app.route('/link', methods=["POST"])
+def link():
+    return render_template('link.html')
 
 
 
