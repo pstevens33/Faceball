@@ -147,4 +147,4 @@ def technical():
 
 if __name__ == '__main__':
     model = load_model('models/gpu_300_players_sigmoid_binary.h5')
-    app.run(host='0.0.0.0', port=8105, debug=False)
+    app.run(host='ec2-34-202-65-148.compute-1.amazonaws.com', port=8105, debug=False)
