@@ -148,4 +148,4 @@ def technical():
 if __name__ == '__main__':
     model = load_model('models/gpu_300_players_sigmoid_binary.h5')
     port = int(os.environ.get('PORT', 8105))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run()
