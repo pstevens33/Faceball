@@ -107,39 +107,59 @@
         <div class="col-sm-8">
             <div class="pudding-content">
                 <p class="pudding-paragraph">
-                    What makes a good baseball player? Some will tell you that it's his speed. His athleticism. His eye for the baseball. Most coaches will tell you that it's his size and frame. No doubt, these factors all play a part in the recipe for a good baseball player. But if you listen to the old scouts, the ones that have been doing it the longest, since before moneyball and statistics determined a player's value, you'll hear them tell you what they think of the player's face. Very scientific stuff. 
+                    I decided to start this project when I was watching the movie "Moneyball" and the scouts kept saying that they projected that some players would be good in the MLB because of their looks. This made me think that maybe there was some truth to this. Or at least a little.
                 </p>
                 <div id="scout-gif">
                     <center><img src="/static/gif/scout.gif" style="width: 90%;"></center>
                 </div>
                 <center><p id="dismiss">Click to dismiss</p></center>
                 <p class="pudding-paragraph">
-                    Before you discredit these scouts as "behind the times", let's give it a little thought and exploration. After all, some generalizations have roots that actually bear some fact. 
-                </p>
-                <p class="pudding-paragraph">
                     Since the inception of Major League Baseball in 1871, there have been 19,022 people to play the game. Of that, 13,434 were born in the United States of America and have an obtainable picture of their face. It is important to take only American born players as we are analyzing for facial generalizations and not racially or culturally differentiating characteristics.
                 </p>
                 <p class="pudding-paragraph">
-                    All of the images of the MLB players were obtained along with their total WAR stats. WAR stands for "Wins Above Replacement." This is the total number of wins a player produced in his career over what the average player could. Higher WAR = Better Player. Each WAR stat was divided by the number of seasons played to get the average WAR over a career. A WAR of 0 means a player is average, a WAR of 5 means he is a perennial All-Star.
+                    I scraped the image of the 13,434 along with their total WAR stats. WAR stands for "Wins Above Replacement." This is the total number of wins a player produced in his career over what the average player could. Higher WAR = Better Player. Each WAR stat was divided by the number of seasons played to get the average WAR over a career. A WAR of 0 means a player is average, a WAR of 5 means he is a perennial All-Star.
                 </p>
                 <p class="pudding-paragraph">
-                    All of this data was fed into a <strong>convolutional neural network</strong> which is basically just a machine learning program that scans pictures piece by piece until it understands the data. When it has learned all of the data, it can make predictions on new data fed to it. Cool, right?
+                    These images ranged in quality from high-definition headshots to drawings of what may have resembled a face. In order for the model to be able to make predicitons on facial features, I needed to eliminate all of the photos where the computer could not detect a face. A combination of dlib, opencv, and openface were used to detect a face in each image and crop it into a new picture showing just the face.
+                </p>
+                <center><div style="text-align: center; margin-bottom: 20px;">
+                    <img src="static/img/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg" alt="Raw Image" style="display: inline-block;">
+                    <img src="static/img/arrow.png" alt="Arrow Image" style="width: 50px; height: 50px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+                    <img src="static/img/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image" style="display: inline-block;">
+                </div></center>
+                <p class="pudding-paragraph">
+                    This process also helped to account for other factors that could skew the model's predictions. One might have been a team's jersey or hat. I would assume that a model would pick up on the fact that a player wearing a yankees hat is probably better than one sporting an A's cap.
+                </p>
+                <p class="pudding-paragraph">
+                    The processed images were converted into numpy arrays and fed into a convolutional neural network. If you are unclear of how neural nets work, see the image below. At a very high level, they take inputs, make decisions based on a number of factors, and then spit out the output.
+                </p>
+                <center><div style="text-align: center; margin-bottom: 20px;">
+                    <img src="static/img/neural_net_diagram.png" alt="Raw Image" style="display: inline-block;">
+                </div></center>
+                <p class="pudding-paragraph">
+                    The architecture that worked the best for the purpose of this project consisted of 5 convolution layers, each followed by a max pooling layer and dropout layer of 0.35. I also added 4 fully-connected layers to allow for some more depth. The loss function that worked best was binary crossentropy with sigmoid for the output function. I ran the model for 300 epochs and plotted the training and test loss. It should be noted that since the classes were highly imbalanced (60% 0's, 20% 1's, and so on), as the model learned, the accuracy actually went down. Because of the imbalance and the fact that a player's ability isn't driven by facial features to a large extent, as the model begins to guess values other than 0, it is most likely going to become less accurate. The loss was the most important metric to take note of.
+                </p>
+                <center><div style="text-align: center; margin-bottom: 20px;">
+                    <img src="static/img/loss_300_binary_sigmoid_adam_0.35.png" alt="Raw Image" style="display: inline-block;">
+                </div></center>
+                <p class="pudding-paragraph">
+                    You can see that the test loss continues to decrease until around the 60th epoch. The training loss decreases continually with a dropout set at 0.35. Less dropout resulted in a terrible test loss and higher dropout increased the time to convergence significantly.
                 </p>
                 <p class="pudding-paragraph">
                     So what does this neural network tell us?
                 </p>
                 <p class="pudding-paragraph large-text">
-                    THE SCOUTS WERE RIGHT...kind of.
+                    THE SCOUTS WERE RIGHT...sort of.
                 </p>
                 <p class="pudding-paragraph">
                     The images were split up into folders dedicated to their respective classes, i.e. the pictures of players with a WAR of 0 went into a certain folder, WARs of 1's went in another, and so on. The model then made its predictions on each folder. The hope was that it would predict 0's for every picture in the "0 folder" up to 5's for every picture in the "5 folder." The average prediction for each class is recorded below. You can see how the model actually predicts higher values for the higher classes.
                 </p>
                 <center><svg id="svg-trend" style="width: 100%"></svg></center>
                 <p class="pudding-paragraph">
-                    Obviously the model can't predict the classes perfectly because we're only going off of a picture of a face here. But using just that, there is a definite trend! 
+                    So the model can't see a 5 and predict 5. That's a given. But the trend shown explains that even on unseen data, the model predicts higher values for better players.
                 </p>
                 <p class="pudding-paragraph large-text">
-                    But what about you? Do you think your beautiful face is cut out for the MLB? Upload a picture to see what the model thinks!
+                    Try uploading a picture of your own to see what the neural net thinks of you.
                 </p>
                 <center>
                     <form action="/score" method="POST" enctype="multipart/form-data" id="submit-form" role="form">
@@ -175,9 +195,17 @@
                     </div>
                 </center>
 
-                
                 <p class="pudding-paragraph">
-                    The next step is to determine what features make our model predict who's good and who's not. To do that we'll need to employ a method called <strong>principal component analysis</strong>, another fancy word for reducing our pictures down into just the bare bones of what actually makes the picture. By doing this, we can average the pictures of each class and note differences between them. The pictures below are the actual average faces calculated from all of the pictures in each class, 0 to 5, from left to right.
+                    The next step is to determine what features make our model predict who's good and who's not. I thought the best way to do that would be to visualize the filters. Let me explain how this is done... The images that are fed into the model have a very high amount of loss. The loss is reduced by gradient descent with respect to the cost function associated with the data. The picture is broken down piece by piece and the neural net learns the bits that make up the data. To visualize the filters you can think of the reverse of this process. You start with an output class, let's use 0, and feed a noisy image (think bad reception on a 1950s television) into the model. The model will employ gradient ASCENT in order to maximize the loss of the cost function. Each iteration of gradient ascent, the loss will increase and a picture representing what the model thinks to be a 0 will begin to take shape. Perfect in theory. Below is the output of a picture that the model is 99.9% certain to belong to the class 0.
+                </p>
+                <center><div style="text-align: center; margin-bottom: 20px;">
+                    <img src="static/img/max_0_GPU_500_idkwhatloss_32x32x64x64x128.png" alt="Raw Image" style="display: inline-block;">
+                </div></center>
+                <p class="pudding-paragraph">
+                    It doesn't look as human as I was hoping. This is because the model does not process images the same way you and I do. Either way, there is another way to visualize the differences in class facial features.
+                </p>
+                <p class="pudding-paragraph">
+                    If all of the faces of each class could be averaged together, maybe we could see the differences using human inference. The problem with this strategy is that there are over 9000 images in the 0 class. Each image is of size 128x128, meaning that there are 16384 possible dimensions for each picture. This sounds like a prefect time to employ <strong>Principal Component Analysis</strong>. PCA involves reducing the dimensionality of the input data. Coupled with eigenfaces, a series of eigenvectors that resembe human faces, the images could be broken down into the dimensions that were truly critical in representing the face. By doing this, we can average the pictures of each class and note differences between them. The pictures below are the actual average faces calculated from all of the pictures in each class, 0 to 5, from left to right.
                 </p>
                 <center>
                         <img class="eigen-pics" src='../static/img/average_0.png' alt='Average Face 0'>
