@@ -50,14 +50,14 @@ def score():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
+            flash('Please select a file')
+            return redirect(request.referrer)
         file = request.files['file']
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
+            flash('Please select a file')
+            return redirect(request.referrer)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -84,7 +84,10 @@ def score():
                 if score > 100:
                     score = 100
                 score = round(score,0)
-                data.append(score)      
+                data.append(score)  
+            else:
+                flash('No faces were found in the image. Please try another')
+                return redirect(request.referrer)     
     
     print(data)
     global_model_data = {'path': data[0], 'score': data[1]}
