@@ -99,7 +99,17 @@
 </head>
 <br>
 
-<center><h1>Technical</h1></center>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-danger">
+    {% for message in messages %}
+      <center>{{ message }}</center>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<center><h1>Let's Get Technical</h1></center>
 <div class="container">
         <br>
         <br>
@@ -121,6 +131,7 @@
                 </p>
                 <p class="pudding-paragraph">
                     These images ranged in quality from high-definition headshots to drawings of what may have resembled a face. In order for the model to be able to make predicitons on facial features, I needed to eliminate all of the photos where the computer could not detect a face. A combination of dlib, opencv, and openface were used to detect a face in each image and crop it into a new picture showing just the face.
+<<<<<<< HEAD
                 </p>
                 <center><div style="text-align: center; margin-bottom: 20px;">
                     <img src="static/img/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg" alt="Raw Image" style="display: inline-block;">
@@ -129,8 +140,28 @@
                 </div></center>
                 <p class="pudding-paragraph">
                     This process also helped to account for other factors that could skew the model's predictions. One might have been a team's jersey or hat. I would assume that a model would pick up on the fact that a player wearing a yankees hat is probably better than one sporting an A's cap.
+=======
+>>>>>>> 938a71b717a14a5d48d99a8d15c26e00a87a093f
                 </p>
+                <center><div style="text-align: center; margin-bottom: 20px;">
+                    <img src="static/img/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg" alt="Raw Image" style="display: inline-block;">
+                    <img src="static/img/arrow.png" alt="Arrow Image" style="width: 50px; height: 50px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+                    <img src="static/img/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image" style="display: inline-block;">
+                </div></center>
                 <p class="pudding-paragraph">
+<<<<<<< HEAD
+                    The processed images were converted into numpy arrays and fed into a convolutional neural network. If you are unclear of how neural nets work, see the image below. At a very high level, they take inputs, make decisions based on a number of factors, and then spit out the output.
+=======
+                    This process also helped to account for other factors that could skew the model's predictions. One might have been a team's jersey or hat. I would assume that a model would pick up on the fact that a player wearing a yankees hat is probably better than one sporting an A's cap.
+>>>>>>> 938a71b717a14a5d48d99a8d15c26e00a87a093f
+                </p>
+                <center><div style="text-align: center; margin-bottom: 20px;">
+                    <img src="static/img/neural_net_diagram.png" alt="Raw Image" style="display: inline-block;">
+                </div></center>
+                <p class="pudding-paragraph">
+<<<<<<< HEAD
+                    The architecture that worked the best for the purpose of this project consisted of 5 convolution layers, each followed by a max pooling layer and dropout layer of 0.35. I also added 4 fully-connected layers to allow for some more depth. The loss function that worked best was binary crossentropy with sigmoid for the output function. I ran the model for 300 epochs and plotted the training and test loss. It should be noted that since the classes were highly imbalanced (68% 0's, 20% 1's, and so on), as the model learned, the accuracy actually went down. Because of the imbalance and the fact that a player's ability isn't driven by facial features to a large extent, as the model begins to guess values other than 0, it is most likely going to become less accurate. The loss was the most important metric to take note of.
+=======
                     The processed images were converted into numpy arrays and fed into a convolutional neural network. If you are unclear of how neural nets work, see the image below. At a very high level, they take inputs, make decisions based on a number of factors, and then spit out the output.
                 </p>
                 <center><div style="text-align: center; margin-bottom: 20px;">
@@ -138,6 +169,7 @@
                 </div></center>
                 <p class="pudding-paragraph">
                     The architecture that worked the best for the purpose of this project consisted of 5 convolution layers, each followed by a max pooling layer and dropout layer of 0.35. I also added 4 fully-connected layers to allow for some more depth. The loss function that worked best was binary crossentropy with sigmoid for the output function. I ran the model for 300 epochs and plotted the training and test loss. It should be noted that since the classes were highly imbalanced (60% 0's, 20% 1's, and so on), as the model learned, the accuracy actually went down. Because of the imbalance and the fact that a player's ability isn't driven by facial features to a large extent, as the model begins to guess values other than 0, it is most likely going to become less accurate. The loss was the most important metric to take note of.
+>>>>>>> 938a71b717a14a5d48d99a8d15c26e00a87a093f
                 </p>
                 <center><div style="text-align: center; margin-bottom: 20px;">
                     <img src="static/img/loss_300_binary_sigmoid_adam_0.35.png" alt="Raw Image" style="display: inline-block;">
@@ -217,10 +249,10 @@
                 </center>
                 <br>
                 <p class="pudding-paragraph">
-                    Amazingly enough, since these pictures were an accumulation of pictures that the model trained on, you can plug these pictures into the prediction model and see that they predict in ascending order! Even though the faces look very similar, the model can detect the small differences and make accurate predictions.
+                    It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to hear what y'all think so leave a comment and let me know!
                 </p>
                 <p class="pudding-paragraph">
-                    It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to hear what y'all think so leave a comment and let me know!
+                    Amazingly enough, since these pictures were an accumulation of pictures that the model trained on, you can plug these pictures into the prediction model and see that they predict in ascending order! Even though the faces look very similar, the model can detect the small differences and make accurate predictions.
                 </p>
                 <hr>
                 <div id="log"></div>
@@ -356,6 +388,9 @@ $("#reset-button").click(function(){
     $('#submit-form').show();
     $("#projected-image").attr('src', "/static/img/white_square.png")
     upload_count++;
+    if(upload_count >= 9) {
+        location.reload();
+    }
 });
 
 $("#scout-gif").click(function(){
@@ -367,37 +402,6 @@ $("#dismiss").click(function(){
     this.remove();
     $("#scout-gif").remove();
 });
-
-$( function() {
-    $('#drag-ball').draggable(
-    {
-        drag: function(){
-            if($("#drag-ball").position().left >= $("#bat").position().left) {
-                $.ajax({
-                    url: "/technical",
-                    type: "GET",
-                }).done(function (res) {
-                    window.location.href = "/technical"
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
-                });
-            }else if($("#drag-ball").position().left <= ($("#glove").position().left + 50)) {
-                $.ajax({
-                    url: "/basics",
-                    type: "GET",
-                }).done(function (res) {
-                    window.location.href = "/basics"
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
-                });
-            };
-            
-            
-        }
-    });
-});
-
-
 
 
 </script>

@@ -1,0 +1,101 @@
+<head>
+  <!-- Latest compiled and minified CSS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- ************************************   JQuery **************************************** -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+  <script src="../static/js/kuma-gauge.jquery.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+  <script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+  <script src="/static/js/jquery.ui.touch-punch.min.js"></script>
+
+  <!-- ************************************   JQuery **************************************** -->
+
+  <!-- ************************************ Bootstrap ************************************ -->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <!-- ************************************ Bootstrap   ************************************ -->
+  <!-- ************************************   CSS   **************************************** -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
+
+  <!-- ************************************   CSS   **************************************** -->
+  
+  <!-- ************************************   Font   **************************************** -->
+  
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  
+  <!-- ************************************   Font   **************************************** -->
+  
+  <!-- ************************************   D3   **************************************** -->
+  
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  
+  <!-- ************************************   D3   **************************************** -->
+
+  <title>Faceball</title>
+  
+</head>
+<br>
+<div class="black-top">
+    <center>
+        <div class="pudding-title">
+            Faceball
+        </div>
+        <div class="pudding-subtitle">
+            Predicting Success in the MLB based on Facial Features
+        </div>
+        <img id="glove" src="/static/img/glove.png">
+        <img id="bat" src="/static/img/bat.png">
+        <img id="drag-ball" class="ui-widget-content"src="/static/img/baseball.png">
+        <p id="drag-instructions">Drag ball to the glove for the Basics | Drag the ball to the bat for Technical</p>
+        <div class="pudding-author">
+            by <strong>Parker Stevens</strong>
+        </div>
+    </center>
+</div>
+
+<script>
+
+
+$( function() {
+    $('#drag-ball').draggable(
+    {
+        stop: function(){
+            if($("#drag-ball").position().left >= $("#bat").position().left) {
+                $.ajax({
+                    
+                }).done(function (res) {
+                    window.location.href = "/technical"
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
+                });
+            }else if($("#drag-ball").position().left <= ($("#glove").position().left + 50)) {
+                $.ajax({
+                    
+                }).done(function (res) {
+                    window.location.href = "/basics"
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
+                });
+            };
+            
+            
+        }
+    });
+});
+
+</script>
