@@ -99,6 +99,16 @@
 </head>
 <br>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-danger">
+    {% for message in messages %}
+      <center>{{ message }}</center>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
 <center><h1>Just the Basics</h1></center>
 <div class="container">
         <br>
@@ -195,10 +205,10 @@
                 </center>
                 <br>
                 <p class="pudding-paragraph">
-                    Amazingly enough, since these pictures were an accumulation of pictures that the model trained on, you can plug these pictures into the prediction model and see that they predict in ascending order! Even though the faces look very similar, the model can detect the small differences and make accurate predictions.
+                    It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to hear what y'all think so leave a comment and let me know!
                 </p>
                 <p class="pudding-paragraph">
-                    It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to hear what y'all think so leave a comment and let me know!
+                    Amazingly enough, since these pictures were an accumulation of pictures that the model trained on, you can plug these pictures into the prediction model and see that they predict in ascending order! Even though the faces look very similar, the model can detect the small differences and make accurate predictions.
                 </p>
                 <hr>
                 <div id="log"></div>
@@ -334,6 +344,9 @@ $("#reset-button").click(function(){
     $('#submit-form').show();
     $("#projected-image").attr('src', "/static/img/white_square.png")
     upload_count++;
+    if(upload_count >= 9) {
+        location.reload();
+    }
 });
 
 $("#scout-gif").click(function(){
@@ -344,35 +357,6 @@ $("#scout-gif").click(function(){
 $("#dismiss").click(function(){
     this.remove();
     $("#scout-gif").remove();
-});
-
-$( function() {
-    $('#drag-ball').draggable(
-    {
-        drag: function(){
-            if($("#drag-ball").position().left >= $("#bat").position().left) {
-                $.ajax({
-                    url: "/technical",
-                    type: "GET",
-                }).done(function (res) {
-                    window.location.href = "/technical"
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
-                });
-            }else if($("#drag-ball").position().left <= ($("#glove").position().left + 50)) {
-                $.ajax({
-                    url: "/basics",
-                    type: "GET",
-                }).done(function (res) {
-                    window.location.href = "/basics"
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    alert("AJAX call failed: " + textStatus + ", " + errorThrown);
-                });
-            };
-            
-            
-        }
-    });
 });
 
 
