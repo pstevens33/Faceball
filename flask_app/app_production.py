@@ -20,6 +20,7 @@ from image_processing_web import process_image
 
 
 app = Flask(__name__)
+app.secret_key = "super secret key"
 
 
 
