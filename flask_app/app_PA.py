@@ -19,7 +19,7 @@ import pandas as pd
 import sys
 import dlib
 import cv2
-import openface.openface as openface
+import openface as openface
 
 # image processing
 import numpy as np
