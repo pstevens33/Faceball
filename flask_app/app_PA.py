@@ -203,10 +203,7 @@ def process_image(image_path):
     X = np.array(x)
     return(X)
     
-@app.errorhandler(413)
-def error413(e):
-    flash('File too large. File size limit: 2Mb')
-    return redirect(request.referrer)
+
 
 
 if __name__ == '__main__':
