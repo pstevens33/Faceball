@@ -182,6 +182,13 @@ h1 {
     font-size: 12px;
 }
 
+#file-size {
+    margin-top: 10px;
+    margin-bottom: -17px;
+    color: red;
+    font-size: 12px;
+}
+
 #loadingDiv {
     margin-top: 20px;
     margin-bottom: 20px;
