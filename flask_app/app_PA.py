@@ -202,6 +202,11 @@ def process_image(image_path):
     x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
     X = np.array(x)
     return(X)
+    
+@app.errorhandler(413)
+def error413(e):
+    flash('File too large. File size limit: 2Mb')
+    return redirect(request.referrer)
 
 
 if __name__ == '__main__':
