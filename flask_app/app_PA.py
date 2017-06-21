@@ -103,7 +103,6 @@ def score():
     global_model_data = {'path': data[0], 'score': data[1]}
     with open('json_returns/model_return.json', 'w') as outfile:
         json.dump(global_model_data, outfile)
-    time.sleep(3)
     return "", 204
 
 @app.route('/get_model_data')
