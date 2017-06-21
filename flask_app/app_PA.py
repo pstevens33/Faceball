@@ -31,7 +31,7 @@ from keras.preprocessing.image import array_to_img, img_to_array, load_img
 app = Flask(__name__)
 app.secret_key = "super secret key"
 
-
+model = load_model('models/gpu_300_players_sigmoid_binary.h5')
 
 # This is the path to the upload directory
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -205,5 +205,5 @@ def process_image(image_path):
 
 
 if __name__ == '__main__':
-    model = load_model('models/gpu_300_players_sigmoid_binary.h5')
+    # model = load_model('models/gpu_300_players_sigmoid_binary.h5')
     app.run(host='ec2-34-202-65-148.compute-1.amazonaws.com', port=8105, debug=False)
