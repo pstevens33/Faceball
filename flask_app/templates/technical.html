@@ -331,13 +331,13 @@ $("#submit-button").click(function(){
     $('#loadingDiv').show();
     $.ajax({
         url: "/score",
-        type: "POST",
-        processData: false,
+        method: "POST",
+        processData: true,
         contentType: false,
     }).done(function(){
       console.log("Success: Files sent!");
 
-      setTimeout(function(){
+
           $.getJSON('/read_json', function(json) {
               $('#loadingDiv').hide();
               $("#projected-image").attr("src","../projected_faces_web/" + json['path']);
@@ -356,7 +356,7 @@ $("#submit-button").click(function(){
               });
           $("#hidden-pic").show();
           });
-      }, 5000);
+
     }).fail(function(){
       console.log("An error occurred, the files couldn't be sent!");
     });
