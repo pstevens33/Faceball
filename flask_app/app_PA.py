@@ -37,7 +37,7 @@ model = load_model('models/gpu_300_players_sigmoid_binary.h5')
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 # These are the extension that we are accepting to be uploaded
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'PNG', 'JPG'])
-app.config['MAX_CONTENT_PATH'] = 4000000
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 3
 
