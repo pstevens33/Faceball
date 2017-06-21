@@ -338,6 +338,7 @@ $("#submit-button").click(function(e){
       });
     }).fail(function(){
       console.log("An error occurred, the files couldn't be sent!");
+      location.reload();
     });
 });
 
