@@ -61,11 +61,7 @@ What do you take away from these images? I think that the player with a WAR of 5
 
 
 ### See How Good You Could Be!
-I made a website to take your image submissions and predict success using this model. You can find it at **http://ec2-34-226-24-213.compute-1.amazonaws.com:8105/**.
-
-
-
-
+I made a website to take your image submissions and predict success using this model. You can find it at **www.faceball.io**
 
 
 ### References
