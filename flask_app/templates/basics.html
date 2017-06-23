@@ -140,6 +140,17 @@
                     All of the images of the MLB players were obtained along with their total WAR stats. WAR stands for "Wins Above Replacement." This is the total number of wins a player produced in his career over what the average player could. Higher WAR = Better Player. Each WAR stat was divided by the number of seasons played to get the average WAR over a career. A WAR of 0 means a player is average, a WAR of 5 means he is a perennial All-Star.
                 </p>
                 <p class="pudding-paragraph">
+                    The images ranged in quality from high-definition headshots to drawings of what may have resembled a face. In order for the model to be able to make predictions on facial features, I needed to eliminate all of the photos where the computer could not detect a face. A combination of dlib, opencv, and openface were used to detect a face in each image and crop it into a new picture showing just the face.
+                </p>
+                <center><div style="text-align: center; margin-bottom: 20px;">
+                    <img src="static/img/0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c.jpg" alt="Raw Image" style="display: inline-block;">
+                    <img src="static/img/arrow.png" alt="Arrow Image" style="width: 50px; height: 50px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+                    <img src="static/img/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image" style="display: inline-block;">
+                </div></center>
+                <p class="pudding-paragraph">
+                    This process also helped to account for other factors that could skew the model's predictions. One might have been a team's jersey or hat. I would assume that a model would pick up on the fact that a player wearing a Yankees hat is probably better than one sporting an A's cap.
+                </p>
+                <p class="pudding-paragraph">
                     All of this data was fed into a <strong>convolutional neural network</strong> which is basically just a machine learning program that scans pictures piece by piece until it understands the data. When it has learned all of the data, it can make predictions on new data fed to it. Cool, right?
                 </p>
                 <p class="pudding-paragraph">
