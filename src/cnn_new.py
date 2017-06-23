@@ -114,3 +114,4 @@ plt.savefig('../data/plots/loss_300_binary_sigmoid_adam_0.35_3full.png')
 plt.close()
 
 model.save('../data/models/300_binary_sigmoid_adam_0.35_3full.h5')
+
