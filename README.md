@@ -24,7 +24,8 @@ These images were fed through a facial detection process in order to crop and al
 
 
 ### Neural Net
-I implemented a fairly standard convolutional neural network. Will go into detail later...
+
+The architecture that worked the best for the purpose of this project consisted of 5 convolution layers, each followed by a max pooling layer and dropout layer of 0.35. I also added 4 fully-connected layers to allow for some more depth. The loss function that worked best was binary crossentropy with a sigmoid output function.
 
 #### Results
 

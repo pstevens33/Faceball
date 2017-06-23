@@ -124,7 +124,7 @@
                     But ask an old scout - the seasoned one who have been doing this long before the Moneyball movie and modern-day statistical analysis...
                 </p> 
                 <p class="pudding-paragraph">
-                    They'll tell you to look at a player's face. Just ask them. Very scientific, huh?
+                    They'll tell you to look at a player's face. Very scientific, huh?
                 </p>
                 <div id="scout-gif">
                     <center><img src="/static/gif/scout.gif" style="width: 90%;"></center>
@@ -146,7 +146,7 @@
                     So what does this neural network tell us?
                 </p>
                 <p class="pudding-paragraph large-text">
-                    THE SCOUTS WERE RIGHT...kind of.
+                    THE SCOUTS WERE RIGHT...sort of.
                 </p>
                 <p class="pudding-paragraph">
                     The images were split up into folders dedicated to their respective classes, i.e. the pictures of players with a WAR of 0 went into a certain folder, WARs of 1's went in another, and so on. The model then made its predictions on each folder. The hope was that it would predict 0's for every picture in the "0 folder" up to 5's for every picture in the "5 folder." The average prediction for each class is recorded below. You can see how the model actually predicts higher values for the higher classes.
@@ -207,12 +207,15 @@
                 </center>
                 <br>
                 <p class="pudding-paragraph">
-                    It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. Do you agree or disagree? I'm curious to hear what y'all think so leave a comment and let me know!
+                    It seems as though class 5 (right picture) has a more serious demeanor than the others. Classes 0 and 1 sport rounder faces and softer features. And maybe the scratchy texture around the chin of 4 and 5 show an affinity for facial hair. I've talked to a bunch of people about it and they have all given me different and interesting opinions. So I would be interested in hearing your interpretations!
                 </p>
                 <p class="pudding-paragraph">
                     Amazingly enough, since these pictures were an accumulation of pictures that the model trained on, you can plug these pictures into the prediction model and see that they predict in ascending order! Even though the faces look very similar, the model can detect the small differences and make accurate predictions.
                 </p>
                 <hr>
+                <p class="pudding-paragraph">
+                    This project was a lot of fun and I was very surprised at the results. If you want to know more about how this project worked under the hood, check out the <a href="/technical"><strong>Technical Page</strong></a>. If you want to dig into some of the code, you can check out the repository at <a href="https://github.com/pstevens33/Faceball" target="_blank">https://github.com/pstevens33/Faceball</a>
+                </p>
                 <div id="log"></div>
                 <div id="hidden-size"></div>
                 

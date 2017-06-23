@@ -2,10 +2,24 @@ body {
     font-family: 'Slabo 27px', serif;
 }
 
+hr {
+    margin-left: 12%;
+    margin-right: 12%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #333; /* old IE */
+    background-color: #333; /* Modern Browsers */
+}
+
 h1 {
-    color: #7528c1;
+    color: black;
     font-size: 30px;
-    margin-top: 20px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: -10px;
 }
 
 #footer {

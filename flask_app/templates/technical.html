@@ -139,7 +139,7 @@
                     <img src="static/img/projected_0a3e68ee7b3567f0b3ece8a927f63b7a4de1740c0.jpg" alt="Projected Image" style="display: inline-block;">
                 </div></center>
                 <p class="pudding-paragraph">
-                    This process also helped to account for other factors that could skew the model's predictions. One might have been a team's jersey or hat. I would assume that a model would pick up on the fact that a player wearing a yankees hat is probably better than one sporting an A's cap.
+                    This process also helped to account for other factors that could skew the model's predictions. One might have been a team's jersey or hat. I would assume that a model would pick up on the fact that a player wearing a Yankees hat is probably better than one sporting an A's cap.
                 </p>
                 <p class="pudding-paragraph">
                     The processed images were converted into numpy arrays and fed into a convolutional neural network. If you are unclear of how neural nets work, see the image below. At a very high level, they take inputs, make decisions based on a number of factors, and then spit out the output.
@@ -148,7 +148,7 @@
                     <img src="static/img/neural_net_diagram.png" alt="Raw Image" style="display: inline-block;">
                 </div></center>
                 <p class="pudding-paragraph">
-                    The architecture that worked the best for the purpose of this project consisted of 5 convolution layers, each followed by a max pooling layer and dropout layer of 0.35. I also added 4 fully-connected layers to allow for some more depth. The loss function that worked best was binary crossentropy with sigmoid for the output function. I ran the model for 300 epochs and plotted the training and test loss. It should be noted that since the classes were highly imbalanced (68% 0's, 20% 1's, and so on), as the model learned, the accuracy actually went down. Because of the imbalance and the fact that a player's ability isn't driven by facial features to a large extent, as the model begins to guess values other than 0, it is most likely going to become less accurate. The loss was the most important metric to take note of.
+                    The architecture that worked the best for the purpose of this project consisted of 5 convolution layers, each followed by a max pooling layer and dropout layer of 0.35. I also added 4 fully-connected layers to allow for some more depth. The loss function that worked best was binary crossentropy with a sigmoid output function. I ran the model for 300 epochs and plotted the training and test loss. It should be noted that since the classes were highly imbalanced (68% 0's, 20% 1's, and so on), as the model learned, the accuracy actually went down. Because of the imbalance and the fact that a player's ability isn't driven by facial features to a large extent, as the model begins to guess values other than 0, it is most likely going to become less accurate. The loss was the most important metric to take note of.
                 </p>    
                 <center><div style="text-align: center; margin-bottom: 20px;">
                     <img src="static/img/loss_300_binary_sigmoid_adam_0.35.png" alt="Raw Image" style="display: inline-block;">
@@ -217,7 +217,7 @@
                     It doesn't look as human as I was hoping. This is because the model does not process images the same way you and I do. Either way, there is another way to visualize the differences in class facial features.
                 </p>
                 <p class="pudding-paragraph">
-                    If all of the faces of each class could be averaged together, maybe we could see the differences using human inference. The problem with this strategy is that there are over 9000 images in the 0 class. Each image is of size 128x128, meaning that there are 16384 possible dimensions for each picture. This sounds like a prefect time to employ <strong>Principal Component Analysis</strong>. PCA involves reducing the dimensionality of the input data. Coupled with eigenfaces, a series of eigenvectors that resembe human faces, the images could be broken down into the dimensions that were truly critical in representing the face. By doing this, we can average the pictures of each class and note differences between them. The pictures below are the actual average faces calculated from all of the pictures in each class, 0 to 5, from left to right.
+                    If all of the faces of each class could be averaged together, maybe we could see the differences using human inference. The problem with this strategy is that there are over 9000 images in the 0 class. Each image is of size 128x128, meaning that there are 16384 possible dimensions for each picture. This sounds like a prefect time to employ <strong>Principal Component Analysis</strong>. PCA involves reducing the dimensionality of the input data. Coupled with eigenfaces, a series of eigenvectors that resemble human faces, the images could be broken down into the dimensions that were truly critical in representing the face. By doing this, we can average the pictures of each class and note differences between them. The pictures below are the actual average faces calculated from all of the pictures in each class, 0 to 5, from left to right.
                 </p>
                 <center>
                         <img class="eigen-pics" src='../static/img/average_0.png' alt='Average Face 0'>
@@ -235,6 +235,9 @@
                     Amazingly enough, since these pictures were an accumulation of pictures that the model trained on, you can plug these pictures into the prediction model and see that they predict in ascending order! Even though the faces look very similar, the model can detect the small differences and make accurate predictions.
                 </p>
                 <hr>
+                <p class="pudding-paragraph">
+                    This project was a lot of fun and I was very surprised at the results. If you want to dig into some of the code, you can check out the repository at <a href="https://github.com/pstevens33/Faceball" target="_blank">https://github.com/pstevens33/Faceball</a>
+                </p>
                 <div id="log"></div>
                 <div id="hidden-size"></div>
                 
