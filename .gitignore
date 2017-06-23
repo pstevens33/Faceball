@@ -1,1 +1,8 @@
 /flask_app/openface
+*.jpg
+*.jpeg
+*.png
+*.csv
+*.npy
+*.json
+/data
