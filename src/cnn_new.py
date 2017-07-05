@@ -1,8 +1,5 @@
 '''
-Code implements multi-perceptron neural network to classify MNIST images of
-handwritten digits using Keras and Theano.  Based on code from
-https://www.packtpub.com/books/content/training-neural-networks-efficiently-using-keras
-Note: neural network geometry not optimized (accuracy could be much better!)
+Code implements a convolutional neural network using keras and theano to scan images of faces of baseball players to predict their likeliness of success. (5 convolution layers, 3 fully-connected, output shape of 6)
 '''
 
 from __future__ import division
